@@ -3,1161 +3,1410 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio</title>
+<title>MLB 2026 S/S 옥외광고 임팩트 대시보드</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
-
-:root {
-  --bg: #0a0a0f;
-  --bg2: #111118;
-  --bg3: #1a1a26;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.12);
-  --text: #f0f0f8;
-  --text2: #9898b8;
-  --text3: #5858788;
-  --accent: #7c6fcd;
-  --accent2: #a89fe8;
-  --glow: rgba(124,111,205,0.3);
-  --green: #4ade80;
-  --mono: 'JetBrains Mono', monospace;
-  --radius: 14px;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* ─── Cursor glow ─── */
-.cursor-glow {
-  position: fixed;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(124,111,205,0.08) 0%, transparent 70%);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  transition: opacity 0.3s;
-}
-
-/* ─── Noise overlay ─── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.5;
-}
-
-/* ─── Nav ─── */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 20px 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background: rgba(10,10,15,0.7);
-  border-bottom: 1px solid var(--border);
-}
-
-.nav-logo {
-  font-family: var(--mono);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--accent2);
-  letter-spacing: -0.01em;
-  text-decoration: none;
-}
-
-.nav-logo span { color: var(--text2); }
-
-.nav-links {
-  display: flex;
-  gap: 36px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text2);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  transition: color 0.2s;
-  position: relative;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent2);
-  transition: width 0.3s;
-}
-
-.nav-links a:hover { color: var(--text); }
-.nav-links a:hover::after { width: 100%; }
-
-/* ─── Hero ─── */
-#hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 120px 40px 80px;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black, transparent);
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
-  border: 1px solid var(--border2);
-  border-radius: 100px;
-  background: rgba(124,111,205,0.1);
-  font-size: 12px;
-  font-family: var(--mono);
-  color: var(--accent2);
-  margin-bottom: 32px;
-  animation: fadeUp 0.6s ease both;
-}
-
-.hero-badge .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2s ease infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.3); }
-}
-
-.hero-name {
-  font-size: clamp(52px, 8vw, 96px);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #f0f0f8 30%, #9898b8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: fadeUp 0.6s 0.1s ease both;
-}
-
-.hero-title {
-  font-size: clamp(18px, 2.5vw, 26px);
-  font-weight: 400;
-  color: var(--text2);
-  margin-bottom: 16px;
-  animation: fadeUp 0.6s 0.2s ease both;
-}
-
-.hero-title strong {
-  color: var(--accent2);
-  font-weight: 600;
-}
-
-.hero-desc {
-  max-width: 560px;
-  font-size: 16px;
-  color: var(--text2);
-  line-height: 1.8;
-  margin-bottom: 48px;
-  animation: fadeUp 0.6s 0.3s ease both;
-}
-
-.hero-cta {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  animation: fadeUp 0.6s 0.4s ease both;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 28px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.2s;
-  cursor: pointer;
-  border: none;
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 0 30px var(--glow);
-}
-
-.btn-primary:hover {
-  background: var(--accent2);
-  transform: translateY(-2px);
-  box-shadow: 0 0 50px rgba(124,111,205,0.5);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border2);
-}
-
-.btn-secondary:hover {
-  background: var(--bg3);
-  transform: translateY(-2px);
-}
-
-.hero-scroll {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  animation: fadeIn 1s 1s ease both;
-}
-
-.hero-scroll span {
-  font-size: 11px;
-  font-family: var(--mono);
-  color: var(--text2);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.scroll-line {
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  animation: scrollLine 1.5s ease infinite;
-}
-
-@keyframes scrollLine {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  51% { transform: scaleY(1); transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ─── Section base ─── */
-section {
-  position: relative;
-  z-index: 1;
-  padding: 120px 60px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.section-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--accent2);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}
-
-.section-tag::before {
-  content: '';
-  display: block;
-  width: 20px;
-  height: 1px;
-  background: var(--accent);
-}
-
-.section-title {
-  font-size: clamp(28px, 4vw, 42px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin-bottom: 16px;
-}
-
-.section-sub {
-  font-size: 16px;
-  color: var(--text2);
-  max-width: 520px;
-  line-height: 1.8;
-}
-
-/* ─── Divider ─── */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border2), transparent);
-  margin: 0 60px;
-}
-
-/* ─── About ─── */
-#about .about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  margin-top: 60px;
-  align-items: start;
-}
-
-.about-text p {
-  font-size: 16px;
-  color: var(--text2);
-  line-height: 1.9;
-  margin-bottom: 20px;
-}
-
-.about-text p strong { color: var(--text); font-weight: 600; }
-
-.about-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.stat-card {
-  padding: 24px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: border-color 0.2s, transform 0.2s;
-}
-
-.stat-card:hover {
-  border-color: var(--border2);
-  transform: translateY(-3px);
-}
-
-.stat-number {
-  font-size: 36px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--accent2);
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.stat-label {
-  font-size: 12px;
-  color: var(--text2);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-
-/* ─── Skills ─── */
-#skills .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 60px;
-}
-
-.skill-card {
-  padding: 28px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: all 0.25s;
-  position: relative;
-  overflow: hidden;
-}
-
-.skill-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--glow), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.skill-card:hover {
-  border-color: rgba(124,111,205,0.4);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-}
-
-.skill-card:hover::before { opacity: 1; }
-
-.skill-icon {
-  font-size: 28px;
-  margin-bottom: 16px;
-  display: block;
-}
-
-.skill-card h3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  letter-spacing: -0.01em;
-}
-
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.tag {
-  font-size: 11px;
-  font-family: var(--mono);
-  padding: 3px 10px;
-  border-radius: 6px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--text2);
-  transition: all 0.2s;
-}
-
-.skill-card:hover .tag {
-  border-color: rgba(124,111,205,0.3);
-  color: var(--accent2);
-}
-
-/* ─── Projects ─── */
-#projects .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-top: 60px;
-}
-
-.project-card {
-  padding: 32px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: all 0.25s;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-  overflow: hidden;
-}
-
-.project-card::after {
-  content: '↗';
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  font-size: 18px;
-  color: var(--text2);
-  opacity: 0;
-  transform: translate(-4px, 4px);
-  transition: all 0.2s;
-}
-
-.project-card:hover {
-  border-color: rgba(124,111,205,0.35);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
-
-.project-card:hover::after {
-  opacity: 1;
-  transform: translate(0, 0);
-}
-
-.project-number {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--accent);
-  letter-spacing: 0.1em;
-}
-
-.project-card h3 {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.project-card p {
-  font-size: 14px;
-  color: var(--text2);
-  line-height: 1.7;
-  flex: 1;
-}
-
-.project-tech {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.project-featured {
-  grid-column: span 2;
-  background: linear-gradient(135deg, rgba(124,111,205,0.08), var(--bg2));
-}
-
-/* ─── Experience ─── */
-#experience .exp-list {
-  margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.exp-item {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 40px;
-  padding: 40px 0;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.2s;
-}
-
-.exp-item:first-child { border-top: 1px solid var(--border); }
-
-.exp-date {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--text2);
-  padding-top: 4px;
-}
-
-.exp-content h3 {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-bottom: 4px;
-}
-
-.exp-content .company {
-  font-size: 14px;
-  color: var(--accent2);
-  font-weight: 500;
-  margin-bottom: 12px;
-}
-
-.exp-content p {
-  font-size: 14px;
-  color: var(--text2);
-  line-height: 1.8;
-  margin-bottom: 16px;
-}
-
-.exp-content ul {
-  padding-left: 16px;
-  margin-bottom: 16px;
-}
-
-.exp-content li {
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.7;
-  margin-bottom: 4px;
-}
-
-/* ─── Contact ─── */
-#contact {
-  text-align: center;
-}
-
-.contact-card {
-  margin-top: 60px;
-  padding: 80px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  position: relative;
-  overflow: hidden;
-}
-
-.contact-card::before {
-  content: '';
-  position: absolute;
-  top: -100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(124,111,205,0.15), transparent 70%);
-  pointer-events: none;
-}
-
-.contact-card h3 {
-  font-size: clamp(24px, 4vw, 36px);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  margin-bottom: 16px;
-}
-
-.contact-card p {
-  font-size: 16px;
-  color: var(--text2);
-  margin-bottom: 40px;
-  max-width: 440px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.contact-links {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 48px;
-  padding-top: 40px;
-  border-top: 1px solid var(--border);
-}
-
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border: 1px solid var(--border2);
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text2);
-  text-decoration: none;
-  transition: all 0.2s;
-  background: var(--bg3);
-}
-
-.social-link:hover {
-  color: var(--text);
-  border-color: var(--accent);
-  background: rgba(124,111,205,0.1);
-  transform: translateY(-2px);
-}
-
-/* ─── Footer ─── */
-footer {
-  position: relative;
-  z-index: 1;
-  padding: 32px 60px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-footer p {
-  font-size: 13px;
-  color: var(--text2);
-  font-family: var(--mono);
-}
-
-/* ─── Scroll animations ─── */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-
-/* ─── Responsive ─── */
-@media (max-width: 900px) {
-  nav { padding: 20px 30px; }
-  .nav-links { gap: 24px; }
-  section { padding: 80px 30px; }
-  .divider { margin: 0 30px; }
-  #about .about-grid { grid-template-columns: 1fr; gap: 48px; }
-  #skills .skills-grid { grid-template-columns: 1fr 1fr; }
-  #projects .projects-grid { grid-template-columns: 1fr; }
-  .project-featured { grid-column: span 1; }
-  .exp-item { grid-template-columns: 1fr; gap: 8px; }
-  footer { flex-direction: column; gap: 8px; text-align: center; }
-}
-
-@media (max-width: 600px) {
-  .nav-links { display: none; }
-  #skills .skills-grid { grid-template-columns: 1fr; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
-  .contact-card { padding: 48px 24px; }
-}
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f7f7f9;
+    --bg3: #f0f0f4;
+    --card: #ffffff;
+    --card2: #f7f7f9;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.14);
+    --text: #111118;
+    --text2: #4a4a60;
+    --text3: #9090a8;
+    --accent: #a07840;
+    --accent2: #8a6228;
+    --blue: #2c62c8;
+    --blue2: #1a4ea8;
+    --green: #1e8a58;
+    --red: #c03030;
+    --amber: #b06820;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .header {
+    padding: 2rem 2.5rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .header-left h1 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .header-left .sub {
+    font-size: 12px;
+    color: var(--text3);
+    font-family: var(--mono);
+    letter-spacing: 0.03em;
+  }
+  .header-right {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .tag {
+    font-size: 11px;
+    font-family: var(--mono);
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    white-space: nowrap;
+  }
+  .tag.accent { border-color: rgba(200,169,110,0.4); color: var(--accent); }
+
+  /* ── Layout ── */
+  .main { padding: 2rem 2.5rem; max-width: 1400px; margin: 0 auto; }
+  
+  .section-label {
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mb { margin-bottom: 2rem; }
+  .mb-sm { margin-bottom: 1rem; }
+
+  /* ── KPI Grid ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: #e8e8f0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .kpi {
+    background: var(--card);
+    padding: 1.4rem 1.5rem;
+  }
+  .kpi-label {
+    font-size: 10px;
+    font-family: var(--mono);
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .kpi-value.gold { color: var(--accent2); }
+  .kpi-value.blue { color: var(--blue2); }
+  .kpi-value.green { color: var(--green); }
+  .kpi-sub {
+    font-size: 11px;
+    color: var(--text3);
+    line-height: 1.5;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-top: 6px;
+  }
+  .badge-up { background: rgba(30,138,88,0.1); color: var(--green); border: 1px solid rgba(30,138,88,0.2); }
+  .badge-note { background: rgba(44,98,200,0.08); color: var(--blue); border: 1px solid rgba(44,98,200,0.15); }
+
+  /* ── Formula Grid ── */
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 10px;
+    margin-bottom: 2rem;
+  }
+  .formula-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.1rem 1.2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .formula-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+  .f-num { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .f-name { font-size: 10px; color: var(--text3); font-family: var(--mono); margin-bottom: 10px; }
+  .f-body {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--accent);
+    line-height: 1.8;
+    background: rgba(160,120,64,0.06);
+    border-radius: 4px;
+    padding: 8px 10px;
+  }
+
+  /* ── Two Column ── */
+  .two-col { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,0.7fr); gap: 14px; margin-bottom: 2rem; }
+  .three-col { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-bottom: 2rem; }
+
+  /* ── Card ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.3rem 1.5rem;
+  }
+  .card-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--text3);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Chart Wrappers ── */
+  .chart-wrap { position: relative; width: 100%; }
+  .h200 { height: 200px; }
+  .h240 { height: 240px; }
+  .h260 { height: 260px; }
+  .h300 { height: 300px; }
+
+  /* ── Media Table ── */
+  .media-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .media-table th {
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text3);
+    text-align: left;
+    padding: 0 8px 10px;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .media-table td {
+    padding: 9px 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: middle;
+  }
+  .media-table tr:last-child td { border-bottom: none; }
+  .media-table .num { text-align: right; font-family: var(--mono); }
+  .media-table .region-cell { color: var(--text3); font-size: 11px; }
+  .media-table .media-name { color: var(--text); font-weight: 500; font-size: 12px; }
+  .idx-hi { color: var(--accent2); font-weight: 500; font-family: var(--mono); }
+  .idx-mid { color: var(--blue2); font-family: var(--mono); }
+  .idx-lo { color: var(--text3); font-family: var(--mono); }
+
+  .type-pill {
+    display: inline-block;
+    font-size: 9px;
+    font-family: var(--mono);
+    padding: 2px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+  .p1 { background: rgba(44,98,200,0.08); color: var(--blue); border: 1px solid rgba(44,98,200,0.18); }
+  .p2 { background: rgba(160,120,64,0.09); color: var(--accent); border: 1px solid rgba(160,120,64,0.2); }
+  .p3 { background: rgba(30,138,88,0.08); color: var(--green); border: 1px solid rgba(30,138,88,0.18); }
+  .p4 { background: rgba(176,104,32,0.08); color: var(--amber); border: 1px solid rgba(176,104,32,0.18); }
+
+  /* ── Population Bars ── */
+  .pop-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .pop-row:last-child { border-bottom: none; }
+  .pop-name { width: 60px; color: var(--text); font-weight: 500; flex-shrink: 0; }
+  .pop-bar-wrap { flex: 1; background: #e8e8f0; border-radius: 2px; height: 6px; overflow: hidden; }
+  .pop-bar { height: 100%; border-radius: 2px; }
+  .pop-val { width: 80px; text-align: right; font-family: var(--mono); font-size: 11px; color: var(--text2); flex-shrink: 0; }
+  .pop-pct { width: 44px; text-align: right; font-size: 10px; color: var(--text3); font-family: var(--mono); flex-shrink: 0; }
+
+  /* ── Target Cards ── */
+  .target-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 2rem; }
+  .target-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+  }
+  .t-region { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; letter-spacing: -0.01em; }
+  .t-pop { font-size: 10px; font-family: var(--mono); color: var(--text3); margin-bottom: 10px; }
+  .t-match {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .dot-hi { background: var(--green); }
+  .dot-mid { background: var(--amber); }
+  .t-desc { font-size: 11px; color: var(--text3); line-height: 1.6; }
+
+  /* ── SA Table ── */
+  .sa-wrap { overflow-x: auto; }
+  .sa-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 520px; }
+  .sa-table th {
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text3);
+    text-align: right;
+    padding: 0 8px 10px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .sa-table th:first-child { text-align: left; }
+  .sa-table td {
+    padding: 8px 8px;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text2);
+  }
+  .sa-table td:first-child { text-align: left; color: var(--text); font-family: 'Noto Sans KR', sans-serif; }
+  .sa-table .uplift { color: var(--green); font-weight: 500; }
+  .sa-table tr:last-child td { border-bottom: none; }
+
+  /* ── Store Rows ── */
+  .store-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .store-row:last-child { border-bottom: none; }
+  .store-name { flex: 1; color: var(--text2); font-size: 12px; }
+  .store-lift { font-family: var(--mono); font-weight: 500; font-size: 13px; }
+  .lift-hi { color: var(--blue2); }
+  .lift-pos { color: var(--green); }
+  .lift-base { color: var(--text2); }
+
+  /* ── Priority Cards ── */
+  .priority-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-bottom: 1rem; }
+  .priority-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .priority-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .p-rank { font-size: 10px; font-family: var(--mono); color: var(--text3); margin-bottom: 6px; }
+  .p-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -0.01em; }
+  .p-desc { font-size: 11px; color: var(--text3); line-height: 1.6; }
+
+  /* ── Store Tabs ── */
+  .stab {
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 4px 9px;
+    border-radius: 4px;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--text3);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .stab:hover { background: var(--bg3); color: var(--text2); }
+  .stab.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* ── Legend ── */
+  .legend-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 12px; }
+  .leg { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text3); font-family: var(--mono); }
+  .leg-sq { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 3rem;
+    padding: 1.5rem 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text3);
+  }
+
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .formula-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+    .three-col { grid-template-columns: 1fr; }
+    .target-grid { grid-template-columns: repeat(2, 1fr); }
+    .priority-grid { grid-template-columns: repeat(2, 1fr); }
+    .main { padding: 1.5rem; }
+    .header { padding: 1.5rem; flex-direction: column; }
+  }
 </style>
 </head>
 <body>
 
-<!-- Cursor glow -->
-<div class="cursor-glow" id="cursorGlow"></div>
-
-<!-- Navigation -->
-<nav>
-  <a class="nav-logo" href="#hero">AD<span>.dev</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- Hero -->
-<section id="hero">
-  <div class="hero-grid"></div>
-
-  <div class="hero-badge">
-    <span class="dot"></span>
-    Available for work
+<!-- ── HEADER ── -->
+<div class="header">
+  <div class="header-left">
+    <h1>MLB 2026 S/S 옥외광고 임팩트 대시보드</h1>
+    <div class="sub">CAMPAIGN: 카리나 2026SS &nbsp;/&nbsp; PERIOD: 2026-02-23 ~ 2026-03-31 &nbsp;/&nbsp; REGION: 성수·강남·명동·홍대</div>
   </div>
-
-  <h1 class="hero-name">Your Name</h1>
-
-  <p class="hero-title">
-    <strong>Full-Stack Developer</strong> &amp; UI/UX Designer
-  </p>
-
-  <p class="hero-desc">
-    아름다운 디지털 경험을 만드는 개발자입니다.<br>
-    사용자 중심의 인터페이스와 견고한 백엔드 시스템을 구축합니다.
-  </p>
-
-  <div class="hero-cta">
-    <a class="btn btn-primary" href="#projects">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      프로젝트 보기
-    </a>
-    <a class="btn btn-secondary" href="#contact">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      연락하기
-    </a>
+  <div class="header-right">
+    <span class="tag accent">8개 매체</span>
+    <span class="tag">지상 옥외 2건</span>
+    <span class="tag">지하철 메트로 6건</span>
+    <span class="tag">데이터 기준: 매드업 임팩트 분석</span>
   </div>
+</div>
 
-  <div class="hero-scroll">
-    <span>scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
+<div class="main">
 
-<div class="divider"></div>
-
-<!-- About -->
-<section id="about">
-  <div class="reveal">
-    <div class="section-tag">About Me</div>
-    <h2 class="section-title">저를 소개합니다</h2>
-    <p class="section-sub">코드로 아이디어를 현실로 만들어 온 5년차 개발자입니다.</p>
-  </div>
-
-  <div class="about-grid">
-    <div class="about-text reveal reveal-delay-1">
-      <p>
-        안녕하세요! 저는 <strong>사용자 경험</strong>을 최우선으로 생각하는 풀스택 개발자입니다.
-        프론트엔드의 섬세한 UI부터 백엔드의 견고한 아키텍처까지 전 영역을 다룹니다.
-      </p>
-      <p>
-        새로운 기술을 배우는 것을 좋아하며, <strong>클린 코드</strong>와 <strong>성능 최적화</strong>에
-        특별한 관심을 가지고 있습니다. 팀과의 협업을 즐기며 복잡한 문제를
-        단순하게 해결하는 것에서 보람을 느낍니다.
-      </p>
-      <p>
-        현재는 <strong>웹 성능 최적화</strong>와 <strong>접근성(a11y)</strong> 향상에
-        집중하고 있으며, 오픈소스 프로젝트에도 꾸준히 기여하고 있습니다.
-      </p>
+  <!-- ── KPI ── -->
+  <div class="section-label">캠페인 핵심 지표 요약</div>
+  <div class="kpi-grid mb">
+    <div class="kpi">
+      <div class="kpi-label">총 광고비</div>
+      <div class="kpi-value gold" style="font-size:19px;letter-spacing:-0.02em">₩201,800,000</div>
+      <div class="kpi-sub">2억 180만원 / 제작비 포함<br>매드업 할인 ₩3,000,000 적용</div>
+      <span class="badge badge-note">8개 매체 통합</span>
     </div>
-
-    <div class="about-stats reveal reveal-delay-2">
-      <div class="stat-card">
-        <div class="stat-number">5+</div>
-        <div class="stat-label">Years of Experience</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">30+</div>
-        <div class="stat-label">Projects Completed</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">12+</div>
-        <div class="stat-label">Happy Clients</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">∞</div>
-        <div class="stat-label">Cups of Coffee</div>
-      </div>
+    <div class="kpi">
+      <div class="kpi-label">총 노출 수 (DOOH achieved)</div>
+      <div class="kpi-value blue">13,766회</div>
+      <div class="kpi-sub">디지털 매체 실집계 기준<br>PSD 고정매체 별도 산정</div>
+      <span class="badge badge-note">Reach 잠재 2.26M+</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">오프라인 Sales Lift</div>
+      <div class="kpi-value green">+19.3%</div>
+      <div class="kpi-sub">전월 동기간 대비 전체 오프라인<br>₩11.6B → ₩13.9B</div>
+      <span class="badge badge-up">↑ 신세계강남 +213%</span>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">브랜드 SA 거래액 Lift</div>
+      <div class="kpi-value green">+46%</div>
+      <div class="kpi-sub">전월 동기간 대비 [MLB] 키워드<br>₩111M → ₩162M</div>
+      <span class="badge badge-up">↑ 구매건 +31%</span>
     </div>
   </div>
-</section>
 
-<div class="divider"></div>
-
-<!-- Skills -->
-<section id="skills">
-  <div class="reveal">
-    <div class="section-tag">Skills</div>
-    <h2 class="section-title">기술 스택</h2>
-    <p class="section-sub">다양한 프로젝트를 통해 쌓아온 기술들입니다.</p>
-  </div>
-
-  <div class="skills-grid">
-    <div class="skill-card reveal reveal-delay-1">
-      <span class="skill-icon">⚡</span>
-      <h3>Frontend</h3>
-      <div class="skill-tags">
-        <span class="tag">React</span>
-        <span class="tag">TypeScript</span>
-        <span class="tag">Next.js</span>
-        <span class="tag">Vue.js</span>
-        <span class="tag">Tailwind CSS</span>
-        <span class="tag">Framer Motion</span>
-      </div>
+  <!-- ── FORMULA ── -->
+  <div class="section-label">핵심 지표 산출 공식</div>
+  <div class="formula-grid mb">
+    <div class="formula-card">
+      <div class="f-num">① Campaign Reach</div>
+      <div class="f-name">유동인구 기반 도달</div>
+      <div class="f-body">역사 승하차 유동인구<br>× 가시성(30%)<br>= 잠재 도달 인원</div>
     </div>
-    <div class="skill-card reveal reveal-delay-2">
-      <span class="skill-icon">🛠</span>
-      <h3>Backend</h3>
-      <div class="skill-tags">
-        <span class="tag">Node.js</span>
-        <span class="tag">Python</span>
-        <span class="tag">FastAPI</span>
-        <span class="tag">Express</span>
-        <span class="tag">GraphQL</span>
-        <span class="tag">REST API</span>
-      </div>
+    <div class="formula-card">
+      <div class="f-num">② Total Exposure</div>
+      <div class="f-name">총 노출 횟수</div>
+      <div class="f-body">일 노출 평균<br>× 집행 기간(일)<br>= 총 노출횟수</div>
     </div>
-    <div class="skill-card reveal reveal-delay-3">
-      <span class="skill-icon">🗄️</span>
-      <h3>Database & Cloud</h3>
-      <div class="skill-tags">
-        <span class="tag">PostgreSQL</span>
-        <span class="tag">MongoDB</span>
-        <span class="tag">Redis</span>
-        <span class="tag">AWS</span>
-        <span class="tag">Docker</span>
-        <span class="tag">Supabase</span>
-      </div>
+    <div class="formula-card">
+      <div class="f-num">③ CPM</div>
+      <div class="f-name">1,000회 노출 단가</div>
+      <div class="f-body">기간 광고비<br>÷ 총 노출 × 1,000<br>(가시성 30% 적용 Reach)</div>
     </div>
-    <div class="skill-card reveal reveal-delay-1">
-      <span class="skill-icon">🎨</span>
-      <h3>Design & UX</h3>
-      <div class="skill-tags">
-        <span class="tag">Figma</span>
-        <span class="tag">UI Design</span>
-        <span class="tag">Prototyping</span>
-        <span class="tag">Design Systems</span>
-        <span class="tag">Accessibility</span>
-      </div>
-    </div>
-    <div class="skill-card reveal reveal-delay-2">
-      <span class="skill-icon">🔧</span>
-      <h3>DevOps & Tools</h3>
-      <div class="skill-tags">
-        <span class="tag">Git</span>
-        <span class="tag">CI/CD</span>
-        <span class="tag">Vercel</span>
-        <span class="tag">GitHub Actions</span>
-        <span class="tag">Linux</span>
-        <span class="tag">Nginx</span>
-      </div>
-    </div>
-    <div class="skill-card reveal reveal-delay-3">
-      <span class="skill-icon">🤖</span>
-      <h3>AI & Data</h3>
-      <div class="skill-tags">
-        <span class="tag">Claude API</span>
-        <span class="tag">OpenAI</span>
-        <span class="tag">LangChain</span>
-        <span class="tag">Pandas</span>
-        <span class="tag">Visualization</span>
-      </div>
+    <div class="formula-card">
+      <div class="f-num">④ Impact Index</div>
+      <div class="f-name">브랜드 임팩트 지수</div>
+      <div class="f-body">Weighted Exposure<br>= Exposure × 매체가중치<br>최고값 = 100 기준화</div>
     </div>
   </div>
-</section>
 
-<div class="divider"></div>
+  <!-- ── THREE-PANEL: 지역별 집행비 / 검색량 변화 / 매출 추이 ── -->
+  <div class="section-label">집행 효과 종합 분석</div>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:2rem">
 
-<!-- Projects -->
-<section id="projects">
-  <div class="reveal">
-    <div class="section-tag">Projects</div>
-    <h2 class="section-title">주요 프로젝트</h2>
-    <p class="section-sub">직접 설계하고 개발한 프로젝트들입니다.</p>
-  </div>
+    <!-- Panel 1: 지역별 집행비 -->
+    <div class="card">
+      <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px">지역별 집행비 %</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:14px">지역별 집행비 비중</div>
+      <div id="regionBudgetWrap"></div>
+    </div>
 
-  <div class="projects-grid">
-    <a class="project-card project-featured reveal" href="#">
-      <div class="project-number">01 — Featured</div>
-      <h3>AI 기반 대시보드 플랫폼</h3>
-      <p>실시간 데이터를 분석하고 시각화하는 엔터프라이즈급 대시보드. Claude API를 활용한 자연어 데이터 쿼리 기능과 커스터마이즈 가능한 위젯 시스템을 제공합니다.</p>
-      <div class="project-tech">
-        <span class="tag">Next.js</span>
-        <span class="tag">TypeScript</span>
-        <span class="tag">Claude API</span>
-        <span class="tag">Chart.js</span>
-        <span class="tag">PostgreSQL</span>
-      </div>
-    </a>
-
-    <a class="project-card reveal reveal-delay-1" href="#">
-      <div class="project-number">02</div>
-      <h3>E-commerce 플랫폼</h3>
-      <p>소규모 브랜드를 위한 풀스택 쇼핑몰. 결제 연동, 재고 관리, 마케팅 자동화 기능을 포함합니다.</p>
-      <div class="project-tech">
-        <span class="tag">React</span>
-        <span class="tag">Node.js</span>
-        <span class="tag">Stripe</span>
-        <span class="tag">MongoDB</span>
-      </div>
-    </a>
-
-    <a class="project-card reveal reveal-delay-2" href="#">
-      <div class="project-number">03</div>
-      <h3>디자인 시스템 라이브러리</h3>
-      <p>접근성을 고려한 60개 이상의 재사용 가능한 컴포넌트 라이브러리. Storybook 문서화 완비.</p>
-      <div class="project-tech">
-        <span class="tag">React</span>
-        <span class="tag">TypeScript</span>
-        <span class="tag">Storybook</span>
-        <span class="tag">CSS Modules</span>
-      </div>
-    </a>
-
-    <a class="project-card reveal reveal-delay-3" href="#">
-      <div class="project-number">04</div>
-      <h3>실시간 협업 툴</h3>
-      <p>팀 프로젝트 관리를 위한 실시간 협업 플랫폼. WebSocket 기반의 실시간 편집 기능 구현.</p>
-      <div class="project-tech">
-        <span class="tag">Vue.js</span>
-        <span class="tag">Socket.io</span>
-        <span class="tag">Express</span>
-        <span class="tag">Redis</span>
-      </div>
-    </a>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- Experience -->
-<section id="experience">
-  <div class="reveal">
-    <div class="section-tag">Experience</div>
-    <h2 class="section-title">경력 사항</h2>
-  </div>
-
-  <div class="exp-list">
-    <div class="exp-item reveal">
-      <div class="exp-date">2023 — Present</div>
-      <div class="exp-content">
-        <h3>Senior Frontend Developer</h3>
-        <div class="company">테크 스타트업 · 서울</div>
-        <p>프론트엔드 팀을 리드하며 대규모 SPA 아키텍처를 설계하고, 성능 최적화를 통해 LCP를 40% 개선했습니다.</p>
-        <ul>
-          <li>React + TypeScript 기반 마이크로 프론트엔드 아키텍처 도입</li>
-          <li>Core Web Vitals 최적화로 사용자 이탈률 25% 감소</li>
-          <li>주니어 개발자 3명 멘토링 및 코드 리뷰 프로세스 정립</li>
-        </ul>
-        <div class="skill-tags">
-          <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Next.js</span><span class="tag">AWS</span>
+    <!-- Panel 2: 검색량 변화 -->
+    <div class="card">
+      <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px">검색량 변화</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:12px">네이버 [MLB] 키워드 검색량 일별 추이</div>
+      <div style="display:flex;gap:10px;margin-bottom:12px">
+        <div style="flex:1;background:#f0f4ff;border-radius:8px;padding:10px 12px">
+          <div style="font-size:10px;color:#4060a0;margin-bottom:4px;font-family:'DM Mono',monospace">캠페인 전 평균</div>
+          <div style="font-size:22px;font-weight:700;color:#2c62c8">76.4</div>
+          <div style="font-size:10px;color:#4060a0">1월 평균 지수</div>
+        </div>
+        <div style="flex:1;background:#fff0f4;border-radius:8px;padding:10px 12px">
+          <div style="font-size:10px;color:#a02040;margin-bottom:4px;font-family:'DM Mono',monospace">캠페인 후 Peak</div>
+          <div style="font-size:22px;font-weight:700;color:#d03050">+31%</div>
+          <div style="font-size:10px;color:#a02040">3월 초 고점 대비</div>
         </div>
       </div>
+      <div class="chart-wrap" style="height:160px"><canvas id="searchTrendChart"></canvas></div>
+      <div style="margin-top:8px;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">▲ 2026-02-23 옥외광고 집행 시작 / 출처: 네이버 데이터랩</div>
     </div>
 
-    <div class="exp-item reveal reveal-delay-1">
-      <div class="exp-date">2021 — 2023</div>
-      <div class="exp-content">
-        <h3>Full-Stack Developer</h3>
-        <div class="company">디지털 에이전시 · 서울</div>
-        <p>다양한 클라이언트를 위한 웹 서비스를 기획부터 배포까지 전담했습니다.</p>
-        <ul>
-          <li>20개 이상의 프로젝트 리드 및 납품</li>
-          <li>Node.js + PostgreSQL 기반 백엔드 API 설계</li>
-          <li>CI/CD 파이프라인 구축으로 배포 시간 60% 단축</li>
-        </ul>
-        <div class="skill-tags">
-          <span class="tag">Vue.js</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span>
+    <!-- Panel 3: 매출 추이 -->
+    <div class="card">
+      <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px">매출 추이</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:10px">옥외광고 집행 전후 지역·매장별 매출 비교 (1/26~2/9 vs 2/26~3/12)</div>
+      <div style="display:flex;gap:6px;margin-bottom:10px">
+        <div style="flex:1;background:#f0f4ff;border-radius:8px;padding:8px 10px">
+          <div style="font-size:9px;color:#1a3090;margin-bottom:2px;font-family:'DM Mono',monospace">옥외진행 합계</div>
+          <div style="font-size:17px;font-weight:700;color:#2c62c8">+19%</div>
+          <div style="font-size:9px;color:#1a3090">₩207.8억→₩248.2억</div>
+        </div>
+        <div style="flex:1;background:#fff4f0;border-radius:8px;padding:8px 10px">
+          <div style="font-size:9px;color:#903020;margin-bottom:2px;font-family:'DM Mono',monospace">미진행 합계</div>
+          <div style="font-size:17px;font-weight:700;color:#c03020">-43%</div>
+          <div style="font-size:9px;color:#903020">₩26.7억→₩15.2억</div>
+        </div>
+        <div style="flex:1;background:#f0fff6;border-radius:8px;padding:8px 10px">
+          <div style="font-size:9px;color:#1a7040;margin-bottom:2px;font-family:'DM Mono',monospace">전체 Total</div>
+          <div style="font-size:17px;font-weight:700;color:#1e8a58">+12%</div>
+          <div style="font-size:9px;color:#1a7040">₩234.5억→₩263.4억</div>
         </div>
       </div>
-    </div>
 
-    <div class="exp-item reveal reveal-delay-2">
-      <div class="exp-date">2019 — 2021</div>
-      <div class="exp-content">
-        <h3>Frontend Developer</h3>
-        <div class="company">IT 기업 · 서울</div>
-        <p>모바일 퍼스트 웹 서비스 개발에 집중하며 반응형 UI 구현 역량을 길렀습니다.</p>
-        <ul>
-          <li>React 기반 SPA 개발 및 유지보수</li>
-          <li>크로스 브라우저 호환성 개선</li>
-        </ul>
-        <div class="skill-tags">
-          <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">SCSS</span>
-        </div>
+      <!-- 뷰 선택 탭 -->
+      <div style="display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap" id="storeTabs">
+        <button onclick="switchStore('region')"  class="stab active" id="tab-region">지역별 합계</button>
+        <button onclick="switchStore('store')"   class="stab" id="tab-store">매장별 상세</button>
+        <button onclick="switchStore('ooh')"     class="stab" id="tab-ooh">옥외진행</button>
+        <button onclick="switchStore('nonooh')"  class="stab" id="tab-nonooh">미진행</button>
+      </div>
+
+      <div style="position:relative;width:100%;height:170px"><canvas id="salesCompareChart"></canvas></div>
+      <div id="storeStat" style="margin-top:7px;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace">
+        파랑(진): 후(2/26~3/12) &nbsp;|&nbsp; 파랑(연): 전(1/26~2/9) &nbsp;|&nbsp; 막대 위 증감률 표시
       </div>
     </div>
   </div>
-</section>
 
-<div class="divider"></div>
-
-<!-- Contact -->
-<section id="contact">
-  <div class="reveal">
-    <div class="section-tag">Contact</div>
-    <h2 class="section-title">함께 일해요</h2>
-  </div>
-
-  <div class="contact-card reveal reveal-delay-1">
-    <h3>새로운 프로젝트가 있나요?</h3>
-    <p>프리랜서 프로젝트, 풀타임 포지션, 또는 그냥 인사도 환영합니다!</p>
-    <a class="btn btn-primary" href="mailto:hello@yourname.dev">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      hello@yourname.dev
-    </a>
-
-    <div class="contact-links">
-      <a class="social-link" href="#">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a class="social-link" href="#">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a class="social-link" href="#">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
-        Twitter
-      </a>
-      <a class="social-link" href="#">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zM11 11V7M15 11V7"/></svg>
-        Blog
-      </a>
-      <a class="social-link" href="#">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Resume
-      </a>
+  <!-- ── CHARTS ROW 1 ── -->
+  <div class="section-label">지역별 성과 분석</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Impact Index avg. vs 비용 비중</div>
+      <div class="legend-row">
+        <span class="leg"><span class="leg-sq" style="background:#c8a96e"></span>Impact Index avg.</span>
+        <span class="leg"><span class="leg-sq" style="background:#5b8de8"></span>비용 비중 (%)</span>
+      </div>
+      <div class="chart-wrap h260"><canvas id="impactChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Reach 기준 CPM (원)</div>
+      <div class="chart-wrap h260"><canvas id="cpmChart"></canvas></div>
+      <div style="margin-top:10px;font-size:10px;color:var(--text3);font-family:var(--mono)">※ 기간 광고비 ÷ 잠재 Reach × 1,000 / 성수 고비용은 전략적 타겟핏 고려</div>
     </div>
   </div>
-</section>
 
-<!-- Footer -->
-<footer>
-  <p>© 2026 Your Name · Built with ♥</p>
-  <p>Designed &amp; Developed by me</p>
-</footer>
+  <!-- ── GANTT TIMELINE ── -->
+  <div class="section-label">집행 미디어 운영 기간 — 타임보드</div>
+  <div class="card mb" id="gantt-section">
+    <div class="card-title">매체별 시작일 ~ 종료일 (2026-02-23 ~ 2026-03-31)</div>
+    <div id="gantt-container" style="overflow-x:auto;padding-bottom:4px"></div>
+  </div>
+
+  <!-- ── MEDIA TABLE ── -->
+  <div class="section-label">매체별 Impact Index 상세</div>
+  <div class="card mb">
+    <div class="card-title">DOOH 매체별 성과 — 가중치 · Weighted Exposure · Impact Index · 노출 단가</div>
+    <div style="overflow-x:auto">
+    <table class="media-table">
+      <thead>
+        <tr>
+          <th>지역</th>
+          <th>매체명</th>
+          <th>타입</th>
+          <th style="text-align:right">가중치</th>
+          <th style="text-align:right">Weighted Exp.</th>
+          <th style="text-align:right">Impact Index</th>
+          <th style="text-align:right">기간 광고비</th>
+          <th style="text-align:right">노출단가 (₩/회)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="region-cell">성수</td>
+          <td class="media-name">성수역 디지털 종합안내도</td>
+          <td><span class="type-pill p1">개찰구 DOOH</span></td>
+          <td class="num">2.0</td>
+          <td class="num">11,332</td>
+          <td class="num idx-hi">100.0</td>
+          <td class="num">₩8,541,176</td>
+          <td class="num">₩1,507</td>
+        </tr>
+        <tr>
+          <td class="region-cell"></td>
+          <td class="media-name">성수15 전광판</td>
+          <td><span class="type-pill p2">역사 패키지</span></td>
+          <td class="num">2.5</td>
+          <td class="num">5,593</td>
+          <td class="num idx-mid">49.4</td>
+          <td class="num">₩5,338,235</td>
+          <td class="num">₩2,386</td>
+        </tr>
+        <tr>
+          <td class="region-cell"></td>
+          <td class="media-name">엔스퀘어 성수역1기</td>
+          <td><span class="type-pill p3">대형 DOOH</span></td>
+          <td class="num">1.3</td>
+          <td class="num">858</td>
+          <td class="num idx-lo">7.6</td>
+          <td class="num">₩3,558,824</td>
+          <td class="num">₩5,392</td>
+        </tr>
+        <tr>
+          <td class="region-cell">강남</td>
+          <td class="media-name">G-LIGHT</td>
+          <td><span class="type-pill p4">랜드마크 DOOH</span></td>
+          <td class="num">2.5</td>
+          <td class="num">2,450</td>
+          <td class="num idx-mid">21.6</td>
+          <td class="num">₩4,529,412</td>
+          <td class="num">₩4,622</td>
+        </tr>
+        <tr>
+          <td class="region-cell"></td>
+          <td class="media-name">엔스퀘어 강남역 4기</td>
+          <td><span class="type-pill p3">대형 DOOH</span></td>
+          <td class="num">1.3</td>
+          <td class="num">3,432</td>
+          <td class="num idx-mid">30.3</td>
+          <td class="num">₩14,270,270</td>
+          <td class="num">₩5,405</td>
+        </tr>
+        <tr>
+          <td class="region-cell">명동</td>
+          <td class="media-name">명동 신한은행 전광판</td>
+          <td><span class="type-pill p3">대형 DOOH +a</span></td>
+          <td class="num">2.2</td>
+          <td class="num">4,831</td>
+          <td class="num idx-mid">42.6</td>
+          <td class="num">₩4,941,176</td>
+          <td class="num">₩2,250</td>
+        </tr>
+        <tr>
+          <td class="region-cell"></td>
+          <td class="media-name">엔스퀘어 명동역 1기</td>
+          <td><span class="type-pill p1">개찰구 DOOH</span></td>
+          <td class="num">1.5</td>
+          <td class="num">990</td>
+          <td class="num idx-lo">8.7</td>
+          <td class="num">₩355,882</td>
+          <td class="num">₩539</td>
+        </tr>
+        <tr>
+          <td class="region-cell">홍대</td>
+          <td class="media-name">홍대역 씽크</td>
+          <td><span class="type-pill p2">역사 동선 패키지</span></td>
+          <td class="num">2.5</td>
+          <td class="num">4,758</td>
+          <td class="num idx-mid">42.0</td>
+          <td class="num">₩4,626,471</td>
+          <td class="num">₩2,431</td>
+        </tr>
+        <tr>
+          <td class="region-cell"></td>
+          <td class="media-name">엔스퀘어 홍대역 1기</td>
+          <td><span class="type-pill p1">개찰구 DOOH</span></td>
+          <td class="num">1.2</td>
+          <td class="num">792</td>
+          <td class="num idx-lo">7.0</td>
+          <td class="num">₩355,882</td>
+          <td class="num">₩539</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div style="margin-top:10px;font-size:10px;color:var(--text3);font-family:var(--mono)">※ PSD 고정 매체(성수·명동·건대) 별도 산정 — 역사 유동인구 × 접촉률 추정값으로 기준 상이 / 집행기간 광고비 = 총광고비 × (집행기간/전체기간)</div>
+  </div>
+
+  <!-- ── POPULATION ── -->
+  <div class="section-label">유동인구 현황 & 타겟 적합성</div>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">지역별 일평균 역사 유동인구 (집행기간 기준)</div>
+      <div class="pop-row">
+        <span class="pop-name">홍대</span>
+        <div class="pop-bar-wrap"><div class="pop-bar" style="width:100%;background:#5b8de8"></div></div>
+        <span class="pop-val">198,529명</span>
+        <span class="pop-pct">비중 8.8%</span>
+      </div>
+      <div class="pop-row">
+        <span class="pop-name">명동</span>
+        <div class="pop-bar-wrap"><div class="pop-bar" style="width:99.8%;background:#7aaaf0"></div></div>
+        <span class="pop-val">198,219명</span>
+        <span class="pop-pct">비중 13.6%</span>
+      </div>
+      <div class="pop-row">
+        <span class="pop-name">강남</span>
+        <div class="pop-bar-wrap"><div class="pop-bar" style="width:78.7%;background:#c8a96e"></div></div>
+        <span class="pop-val">156,267명</span>
+        <span class="pop-pct">비중 33.8%</span>
+      </div>
+      <div class="pop-row">
+        <span class="pop-name">성수</span>
+        <div class="pop-bar-wrap"><div class="pop-bar" style="width:55%;background:#c8a96e"></div></div>
+        <span class="pop-val">109,335명</span>
+        <span class="pop-pct">비중 43.9%</span>
+      </div>
+      <div class="pop-row">
+        <span class="pop-name">건대</span>
+        <div class="pop-bar-wrap"><div class="pop-bar" style="width:44.2%;background:#c8c8d8"></div></div>
+        <span class="pop-val">87,748명</span>
+        <span class="pop-pct">서브</span>
+      </div>
+      <div style="margin-top:12px;font-size:10px;color:var(--text3);font-family:var(--mono)">서울시 지하철 승하차 데이터 / 2026-02-23~03-08 기준 일평균</div>
+    </div>
+    <div class="card">
+      <div class="card-title">매체 가중치 기준표</div>
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <thead>
+          <tr>
+            <th style="text-align:left;padding:0 6px 8px;font-size:10px;font-family:var(--mono);color:var(--text3);border-bottom:1px solid var(--border)">매체 타입</th>
+            <th style="text-align:center;padding:0 6px 8px;font-size:10px;font-family:var(--mono);color:var(--text3);border-bottom:1px solid var(--border)">가중치</th>
+            <th style="text-align:left;padding:0 6px 8px;font-size:10px;font-family:var(--mono);color:var(--text3);border-bottom:1px solid var(--border)">설명</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">역사 브랜딩</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--accent)">3.0</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">고정 PSD, 벽면래핑</td></tr>
+          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">역사 패키지</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--accent)">2.5</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">플랫폼+통로+출구 패키지</td></tr>
+          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">랜드마크 DOOH</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--blue2)">2.5</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">도시 대표 광고판 G-LIGHT</td></tr>
+          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">개찰구 DOOH</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--text2)">1.5</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">개찰구 앞 디지털 스크린</td></tr>
+          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">대형 DOOH</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--text2)">1.3</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">건물 벽면 대형 LED</td></tr>
+          <tr><td style="padding:7px 6px;color:var(--text)">단일 DOOH</td><td style="text-align:center;padding:7px 6px;font-family:var(--mono);color:var(--text3)">1.0</td><td style="padding:7px 6px;color:var(--text3);font-size:10px">소형 디지털 스크린</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── TARGET ── -->
+  <div class="target-grid">
+    <div class="target-card">
+      <div class="t-region">성수</div>
+      <div class="t-pop">일평균 109,335명 / 트렌디 상권</div>
+      <div class="t-match"><span class="dot dot-hi"></span><span style="color:var(--green)">타겟 적합성 최상</span></div>
+      <div class="t-desc">20대 여성 상위 지역 / MLB 성수점 근접 / Impact Index 1위 / 브랜드핏 인구 밀집 최우선</div>
+    </div>
+    <div class="target-card">
+      <div class="t-region">홍대</div>
+      <div class="t-pop">일평균 198,529명 / 관광+상권</div>
+      <div class="t-match"><span class="dot dot-hi"></span><span style="color:var(--green)">타겟 적합성 높음</span></div>
+      <div class="t-desc">서울 20대 여성 영타겟 최밀집 / 씽크 매체 비용 임팩트 우수 / 직영점 도보 7분</div>
+    </div>
+    <div class="target-card">
+      <div class="t-region">명동</div>
+      <div class="t-pop">일평균 198,219명 / 관광+쇼핑</div>
+      <div class="t-match"><span class="dot dot-mid"></span><span style="color:var(--amber)">타겟 적합성 중간</span></div>
+      <div class="t-desc">패션 관심 유저 < 쇼핑 관광객 / 신한은행 전광판→명동점 도보 1분 연결성 최고</div>
+    </div>
+    <div class="target-card">
+      <div class="t-region">강남</div>
+      <div class="t-pop">일평균 156,267명 / MICE+비즈니스</div>
+      <div class="t-match"><span class="dot dot-mid"></span><span style="color:var(--amber)">타겟 적합성 중-높음</span></div>
+      <div class="t-desc">직장인 30대 실구매층 커버 / G-LIGHT 비용 효율 낮으나 대세감 형성 최적 / 신세계강남 +213%</div>
+    </div>
+  </div>
+
+  <!-- ── TRAFFIC LIFT ── -->
+  <div class="section-label">브랜드 검색량 전후 비교 — Traffic Lift</div>
+  <div class="three-col">
+    <div class="card" style="grid-column: span 2">
+      <div class="card-title">SA/BSA 브랜드 키워드 성과 — [MLB] [엠엘비] 전월 동기간 대비</div>
+      <div class="sa-wrap">
+      <table class="sa-table">
+        <thead>
+          <tr>
+            <th>기간</th>
+            <th>광고비</th>
+            <th>노출</th>
+            <th>클릭</th>
+            <th>CPM</th>
+            <th>구매건</th>
+            <th>거래액</th>
+            <th>ROAS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1/26~2/9 (전)</td>
+            <td>₩512K</td>
+            <td>110,900</td>
+            <td>32,131</td>
+            <td>₩4,614</td>
+            <td>1,045</td>
+            <td>₩111M</td>
+            <td>217.4%</td>
+          </tr>
+          <tr>
+            <td>2/26~3/12 (후)</td>
+            <td>₩936K</td>
+            <td>161,551</td>
+            <td>39,787</td>
+            <td>₩5,795</td>
+            <td>1,366</td>
+            <td>₩162M</td>
+            <td>173.5%</td>
+          </tr>
+          <tr>
+            <td class="uplift">증감</td>
+            <td class="uplift">+83%</td>
+            <td class="uplift">+46%</td>
+            <td class="uplift">+24%</td>
+            <td class="uplift">+26%</td>
+            <td class="uplift">+31%</td>
+            <td class="uplift">+46%</td>
+            <td style="color:var(--red);font-family:var(--mono)">-43.9%p</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div style="margin-top:10px;font-size:10px;color:var(--text3);font-family:var(--mono)">ROAS 하락은 광고비 증가(쿼리량 증가→입찰 경쟁) 에 의한 것으로, 쿼리량·거래액 동반 상승 확인 / 네이버 SA·BSA 기준</div>
+    </div>
+    <div class="card">
+      <div class="card-title">GA Paid 채널 사용자 수</div>
+      <div class="chart-wrap h200"><canvas id="gaChart"></canvas></div>
+      <div style="margin-top:10px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;font-family:var(--mono);color:var(--text3);margin-bottom:4px"><span>총 사용자</span><span style="color:var(--green)">+38.1%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;font-family:var(--mono);color:var(--text3);margin-bottom:4px"><span>새 사용자</span><span style="color:var(--green)">+38.0%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;font-family:var(--mono);color:var(--text3)"><span>신규 첫구매자</span><span style="color:var(--green)">+25%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SALES LIFT ── -->
+
+</div><!-- /main -->
+
+<div class="footer">
+  <span>MLB 2026 S/S 옥외광고 임팩트 분석 — 매드업 &nbsp;|&nbsp; 데이터 기준: 서울시 지하철 승하차 / 네이버 데이터랩 / GA4</span>
+  <span>집계 기간: 2026-02-23 ~ 2026-03-08 (중간 분석) / 전체 캠페인: ~ 2026-03-31</span>
+</div>
 
 <script>
-  // Cursor glow
-  const glow = document.getElementById('cursorGlow');
-  document.addEventListener('mousemove', e => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
+  const tc = '#9090a8';
+  const gc = 'rgba(0,0,0,0.06)';
+
+  // ── GANTT TIMELINE ──
+  (function() {
+    const mediaData = [
+      { region: '강남', name: 'G-LIGHT',              type: 'landmark', start: '2026-02-23', end: '2026-03-31', cost: 48000000 },
+      { region: '명동', name: '명동 신한은행 전광판',  type: 'large',    start: '2026-02-23', end: '2026-03-31', cost: 12000000 },
+      { region: '성수', name: '성수역 디지털 종합안내도', type: 'gate',  start: '2026-02-26', end: '2026-03-31', cost: 26400000 },
+      { region: '성수', name: '성수15 전광판',         type: 'package',  start: '2026-02-26', end: '2026-03-31', cost: 16500000 },
+      { region: '강남', name: '엔스퀘어 강남역 4기',   type: 'large',    start: '2026-02-26', end: '2026-03-31', cost: 11000000 },
+      { region: '성수', name: '엔스퀘어 성수역1기',    type: 'large',    start: '2026-02-26', end: '2026-03-31', cost: 11000000 },
+      { region: '명동', name: '엔스퀘어 명동역 1기',   type: 'gate',     start: '2026-02-26', end: '2026-03-31', cost: 1100000  },
+      { region: '홍대', name: '홍대역 씽크',           type: 'package',  start: '2026-02-26', end: '2026-03-31', cost: 14300000 },
+      { region: '홍대', name: '엔스퀘어 홍대역 1기',   type: 'gate',     start: '2026-02-26', end: '2026-03-31', cost: 1100000  },
+      { region: '성수', name: '지하철PSD 성수(2)',      type: 'psd',      start: '2026-02-27', end: '2026-03-31', cost: 10350000 },
+      { region: '성수', name: '지하철PSD 건대(3)',      type: 'psd',      start: '2026-02-27', end: '2026-03-31', cost: 12450000 },
+      { region: '명동', name: '지하철PSD 명동(2)',      type: 'psd',      start: '2026-02-27', end: '2026-03-31', cost: 10600000 },
+      { region: '통합', name: '메트로게이트 53개역',    type: 'metro',    start: '2026-02-26', end: '2026-03-31', cost: 30000000 },
+    ];
+
+    const typeColor = {
+      landmark: { bar: '#a07840', text: '#7a5c28' },
+      large:    { bar: '#2c62c8', text: '#1a4aa0' },
+      gate:     { bar: '#1e8a58', text: '#156644' },
+      package:  { bar: '#8b44b8', text: '#6a3090' },
+      psd:      { bar: '#c05020', text: '#903c18' },
+      metro:    { bar: '#607080', text: '#405060' },
+    };
+    const typeLabel = {
+      landmark: '랜드마크', large: '대형 DOOH', gate: '개찰구',
+      package: '역사 패키지', psd: 'PSD 고정', metro: '메트로',
+    };
+    const regionColor = { 성수: '#2c62c8', 강남: '#a07840', 명동: '#1e8a58', 홍대: '#8b44b8', 통합: '#607080' };
+
+    const campStart = new Date('2026-02-23');
+    const campEnd   = new Date('2026-03-31');
+    const totalDays = (campEnd - campStart) / 86400000 + 1;
+
+    const ROW_H = 36, NAME_W = 200, COST_W = 96, RIGHT_PAD = 16;
+    const HEADER_H = 40, LEGEND_H = 36;
+
+    // Build date axis labels
+    const dateLabels = [];
+    for (let d = new Date(campStart); d <= campEnd; d.setDate(d.getDate() + 7)) {
+      dateLabels.push(new Date(d));
+    }
+
+    const container = document.getElementById('gantt-container');
+    const totalH = HEADER_H + LEGEND_H + mediaData.length * ROW_H + 20;
+
+    // Build SVG
+    let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 ${NAME_W + COST_W + 600 + RIGHT_PAD} ${totalH}" style="font-family:'Noto Sans KR',sans-serif;display:block;min-width:700px">`;
+
+    // Defs
+    svg += `<defs>
+      <clipPath id="barClip"><rect x="${NAME_W+COST_W}" y="0" width="600" height="${totalH}"/></clipPath>
+    </defs>`;
+
+    // Background
+    svg += `<rect width="100%" height="${totalH}" fill="#ffffff"/>`;
+
+    // Alternating row bg
+    mediaData.forEach((m, i) => {
+      const y = HEADER_H + LEGEND_H + i * ROW_H;
+      if (i % 2 === 0) svg += `<rect x="0" y="${y}" width="9999" height="${ROW_H}" fill="#f8f8fb"/>`;
+    });
+
+    // Date axis ticks & vertical grid lines
+    dateLabels.forEach(d => {
+      const dayOffset = (d - campStart) / 86400000;
+      const x = NAME_W + COST_W + (dayOffset / totalDays) * 600;
+      const label = `${d.getMonth()+1}/${String(d.getDate()).padStart(2,'0')}`;
+      svg += `<line x1="${x}" y1="${HEADER_H+LEGEND_H-6}" x2="${x}" y2="${totalH-10}" stroke="#e0e0e8" stroke-width="1"/>`;
+      svg += `<text x="${x}" y="${HEADER_H+LEGEND_H-10}" text-anchor="middle" font-size="9" fill="#9090a8" font-family="'DM Mono',monospace">${label}</text>`;
+    });
+    // End line
+    const endX = NAME_W + COST_W + 600;
+    svg += `<line x1="${endX}" y1="${HEADER_H+LEGEND_H-6}" x2="${endX}" y2="${totalH-10}" stroke="#e0e0e8" stroke-width="1"/>`;
+    svg += `<text x="${endX}" y="${HEADER_H+LEGEND_H-10}" text-anchor="middle" font-size="9" fill="#9090a8" font-family="'DM Mono',monospace">03/31</text>`;
+
+    // Column headers
+    svg += `<rect x="0" y="0" width="9999" height="${HEADER_H}" fill="#f2f2f6"/>`;
+    svg += `<text x="12" y="${HEADER_H/2+5}" font-size="10" fill="#606080" font-family="'DM Mono',monospace" font-weight="500">지역 / 매체명</text>`;
+    svg += `<text x="${NAME_W+8}" y="${HEADER_H/2+5}" font-size="10" fill="#606080" font-family="'DM Mono',monospace" font-weight="500">광고비</text>`;
+    svg += `<text x="${NAME_W+COST_W+300}" y="${HEADER_H/2+5}" text-anchor="middle" font-size="10" fill="#606080" font-family="'DM Mono',monospace" font-weight="500">2026년 02월 ~ 03월 집행 타임라인</text>`;
+
+    // Separator lines
+    svg += `<line x1="0" y1="${HEADER_H}" x2="9999" y2="${HEADER_H}" stroke="#e0e0e8" stroke-width="1"/>`;
+    svg += `<line x1="0" y1="${HEADER_H+LEGEND_H}" x2="9999" y2="${HEADER_H+LEGEND_H}" stroke="#e0e0e8" stroke-width="0.5"/>`;
+    svg += `<line x1="${NAME_W}" y1="0" x2="${NAME_W}" y2="${totalH}" stroke="#e0e0e8" stroke-width="1"/>`;
+    svg += `<line x1="${NAME_W+COST_W}" y1="0" x2="${NAME_W+COST_W}" y2="${totalH}" stroke="#e0e0e8" stroke-width="1"/>`;
+
+    // Legend row
+    const legendY = HEADER_H + LEGEND_H / 2 + 4;
+    let lx = NAME_W + COST_W + 8;
+    Object.entries(typeLabel).forEach(([k, v]) => {
+      svg += `<rect x="${lx}" y="${legendY-9}" width="10" height="10" rx="2" fill="${typeColor[k].bar}"/>`;
+      svg += `<text x="${lx+13}" y="${legendY}" font-size="9" fill="#808090" font-family="'Noto Sans KR',sans-serif">${v}</text>`;
+      lx += 72;
+    });
+
+    // Rows
+    mediaData.forEach((m, i) => {
+      const y = HEADER_H + LEGEND_H + i * ROW_H;
+      const cy = y + ROW_H / 2;
+      const col = typeColor[m.type];
+      const rcol = regionColor[m.region] || '#607080';
+
+      // Region badge
+      svg += `<rect x="8" y="${cy-9}" width="28" height="18" rx="3" fill="${rcol}22"/>`;
+      svg += `<text x="22" y="${cy+4}" text-anchor="middle" font-size="9" fill="${rcol}" font-family="'Noto Sans KR',sans-serif" font-weight="500">${m.region}</text>`;
+
+      // Media name
+      const truncName = m.name.length > 12 ? m.name.slice(0,12) + '…' : m.name;
+      svg += `<text x="44" y="${cy+4}" font-size="11" fill="#222235" font-family="'Noto Sans KR',sans-serif">${truncName}</text>`;
+
+      // Cost
+      const costStr = (m.cost / 1000000).toFixed(1) + 'M';
+      svg += `<text x="${NAME_W+COST_W-8}" y="${cy+4}" text-anchor="end" font-size="10" fill="#6060a0" font-family="'DM Mono',monospace">₩${costStr}</text>`;
+
+      // Gantt bar
+      const startOff = (new Date(m.start) - campStart) / 86400000;
+      const endOff   = (new Date(m.end)   - campStart) / 86400000 + 1;
+      const bx = NAME_W + COST_W + (startOff / totalDays) * 600;
+      const bw = Math.max(((endOff - startOff) / totalDays) * 600, 4);
+      const barH = 18;
+      const by = cy - barH / 2;
+
+      svg += `<rect x="${bx}" y="${by}" width="${bw}" height="${barH}" rx="3" fill="${col.bar}" opacity="0.85" clip-path="url(#barClip)"/>`;
+
+      // Date labels on bar
+      const startLabel = m.start.slice(5).replace('-','/');
+      const endLabel   = m.end.slice(5).replace('-','/');
+      if (bw > 60) {
+        svg += `<text x="${bx+6}" y="${cy+4}" font-size="9" fill="white" font-family="'DM Mono',monospace" clip-path="url(#barClip)">${startLabel}</text>`;
+        svg += `<text x="${bx+bw-6}" y="${cy+4}" text-anchor="end" font-size="9" fill="white" font-family="'DM Mono',monospace" clip-path="url(#barClip)">${endLabel}</text>`;
+      }
+
+      // Row separator
+      svg += `<line x1="0" y1="${y+ROW_H}" x2="9999" y2="${y+ROW_H}" stroke="#e8e8f0" stroke-width="0.5"/>`;
+    });
+
+    svg += '</svg>';
+    container.innerHTML = svg;
+  })();
+
+  // ── Panel 1: 지역별 집행비 horizontal bars ──
+  (function() {
+    const regions = [
+      { name: '성수',   amount: 76700000, pct: 43.9, color: '#2c62c8', type: '메인' },
+      { name: '강남',   amount: 59000000, pct: 33.8, color: '#2c62c8', type: '메인' },
+      { name: '명동',   amount: 23700000, pct: 13.6, color: '#8b44b8', type: '서브' },
+      { name: '홍대',   amount: 15400000, pct: 8.8,  color: '#8b44b8', type: '서브' },
+      { name: '통합',   amount: 30000000, pct: null,  color: '#9090b0', type: '커버리지' },
+    ];
+    const max = 76700000;
+    let html = '';
+    regions.forEach(r => {
+      const w = Math.round((r.amount / max) * 100);
+      const amtStr = (r.amount / 10000000).toFixed(1) + '억';
+      const pctStr = r.pct !== null ? r.pct.toFixed(1) + '%' : '커버리지';
+      html += `
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="width:32px;font-size:12px;font-weight:500;color:#222235;flex-shrink:0">${r.name}</span>
+          <div style="flex:1;background:#f0f0f8;border-radius:3px;height:22px;overflow:hidden;position:relative">
+            <div style="width:${w}%;height:100%;background:${r.color};border-radius:3px;transition:width 0.6s"></div>
+            <span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;color:${w>30?'#fff':'#333'};font-family:'DM Mono',monospace;font-weight:500">${amtStr}</span>
+          </div>
+          <span style="width:38px;font-size:11px;font-family:'DM Mono',monospace;color:#606080;text-align:right;flex-shrink:0">${pctStr}</span>
+        </div>`;
+    });
+    html += `<div style="margin-top:12px;padding-top:10px;border-top:1px solid #e8e8f0;font-size:10px;color:#9090a8;font-family:'DM Mono',monospace">
+      지역 Total: ₩174,800,000 / 통합 커버리지 별도 ₩30,000,000<br>Grand Total: ₩201,800,000 (할인 ₩3,000,000 적용)
+    </div>`;
+    document.getElementById('regionBudgetWrap').innerHTML = html;
+  })();
+
+  // ── Panel 2: 검색량 추이 (네이버 데이터랩 MLB 키워드) ──
+  (function() {
+    const raw = [
+      ['2026-01-01',73.6],['2026-01-08',75.6],['2026-01-15',75.2],['2026-01-22',73.5],['2026-01-29',64.3],
+      ['2026-02-05',69.2],['2026-02-12',72.4],['2026-02-19',92.7],['2026-02-21',100.0],
+      ['2026-02-23',89.6],['2026-02-26',79.1],['2026-03-01',98.9],['2026-03-04',99.5],
+      ['2026-03-07',84.0],['2026-03-10',82.8],['2026-03-12',81.3]
+    ];
+    const labels    = raw.map(d => d[0].slice(5).replace('-','/'));
+    const data      = raw.map(d => d[1]);
+    const launchIdx = labels.indexOf('02/23');
+
+    new Chart(document.getElementById('searchTrendChart'), {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: '캠페인 전',
+              data: data.map((v, i) => i < launchIdx ? v : null),
+              borderColor: '#9090b8',
+              backgroundColor: 'rgba(144,144,184,0.06)',
+              borderWidth: 2,
+              pointRadius: 2.5,
+              pointBackgroundColor: '#9090b8',
+              tension: 0.35,
+              fill: true,
+              spanGaps: false
+            },
+            {
+              label: '캠페인 후 (옥외광고 집행)',
+              data: data.map((v, i) => i >= launchIdx ? v : null),
+              borderColor: '#2c62c8',
+              backgroundColor: 'rgba(44,98,200,0.10)',
+              borderWidth: 2.5,
+              pointRadius: data.map((_, i) => i === launchIdx ? 6 : 3),
+              pointStyle: data.map((_, i) => i === launchIdx ? 'rectRot' : 'circle'),
+              pointBackgroundColor: data.map((_, i) => i === launchIdx ? '#e03050' : '#2c62c8'),
+              pointBorderColor:    data.map((_, i) => i === launchIdx ? '#e03050' : '#2c62c8'),
+              pointBorderWidth: 2,
+              tension: 0.35,
+              fill: true,
+              spanGaps: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: { color: tc, font: { size: 9 }, boxWidth: 10, boxHeight: 10, padding: 8 }
+            },
+            tooltip: {
+              callbacks: {
+                label: ctx => {
+                  if (ctx.parsed.y === null) return null;
+                  const isLaunch = ctx.dataIndex === launchIdx && ctx.datasetIndex === 1;
+                  return (isLaunch ? '🚩 옥외광고 시작 · ' : '') + '지수: ' + ctx.parsed.y.toFixed(1);
+                }
+              }
+            },
+            annotation: {
+              annotations: {
+                launchBox: {
+                  type: 'box',
+                  xMin: launchIdx - 0.5,
+                  xMax: labels.length - 0.5,
+                  yMin: 50,
+                  yMax: 105,
+                  backgroundColor: 'rgba(44,98,200,0.055)',
+                  borderColor: 'rgba(44,98,200,0.25)',
+                  borderWidth: 1,
+                  borderDash: [4, 3],
+                  label: {
+                    display: true,
+                    content: '▶ 옥외광고 집행 구간 (2/23~)',
+                    position: { x: 'start', y: 'start' },
+                    xAdjust: 6,
+                    yAdjust: 6,
+                    font: { size: 9, family: "'DM Mono', monospace", weight: '500' },
+                    color: '#2c62c8',
+                    backgroundColor: 'rgba(44,98,200,0.08)',
+                    padding: { top: 3, bottom: 3, left: 6, right: 6 },
+                    borderRadius: 3,
+                    borderColor: 'rgba(44,98,200,0.2)',
+                    borderWidth: 1
+                  }
+                },
+                launchLine: {
+                  type: 'line',
+                  xMin: launchIdx - 0.5,
+                  xMax: launchIdx - 0.5,
+                  borderColor: '#e03050',
+                  borderWidth: 1.5,
+                  borderDash: [5, 3],
+                  label: {
+                    display: true,
+                    content: '2/23',
+                    position: 'end',
+                    yAdjust: -6,
+                    font: { size: 9, family: "'DM Mono', monospace", weight: '500' },
+                    color: '#e03050',
+                    backgroundColor: 'rgba(224,48,80,0.08)',
+                    padding: { top: 2, bottom: 2, left: 5, right: 5 },
+                    borderRadius: 3,
+                    borderColor: 'rgba(224,48,80,0.25)',
+                    borderWidth: 1
+                  }
+                }
+              }
+            }
+          },
+          scales: {
+            y: { min: 50, max: 105, ticks: { color: tc, font: { size: 10 } }, grid: { color: gc } },
+            x: { ticks: { color: tc, font: { size: 9 }, maxRotation: 45, maxTicksLimit: 10 }, grid: { display: false } }
+          }
+        }
+      });
+  })();
+
+  // ── Panel 3: 지역별 매장 매출 전후 비교 (이미지 실데이터 기준) ──
+  (function() {
+    // 이미지1 기준: 옥외진행 vs 미진행 지역 합계
+    // 이미지2 기준: 매장별 상세
+    const BEFORE = '2026/1/26~2/9';
+    const AFTER  = '2026/2/26~3/12';
+
+    // 탭별 데이터 정의 (단위: 만원, 이미지 원본 기준)
+    const views = {
+      region: {
+        title: '지역별 합계',
+        type: 'bar',
+        labels: ['강남', '명동', '성수', '홍대', '가로수길(미)', '한남(미)'],
+        before: [9984, 204902, 34445, 17049, 18890, 7796],
+        after:  [24887, 183165, 41028, 10077, 9890, 5326],
+        pcts:   [149, -11, 19, -41, -48, -32],
+        colors: ['#2c62c8','#2c62c8','#2c62c8','#2c62c8','#c0c0d0','#c0c0d0'],
+        note: '옥외진행(강남·명동·성수·홍대) vs 미진행(가로수길·한남) / 단위: 만원'
+      },
+      store: {
+        title: '매장별 상세',
+        type: 'bar',
+        labels: ['신세계강남', '강남사옥(직)', '성수(직)', '명동중앙(직)', '신세계면세명동', '홍대(직)', '한남(직)', '가로수길(직)'],
+        before: [6595, 3388, 34445, 87673, 58670, 17049, 7796, 18890],
+        after:  [20668, 4119, 41028, 60845, 111432, 10077, 5326, 9890],
+        pcts:   [213, 22, 19, -31, 90, -41, -32, -48],
+        colors: ['#2c62c8','#2c62c8','#2c62c8','#2c62c8','#2c62c8','#2c62c8','#c0c0d0','#c0c0d0'],
+        note: '옥외진행 매장(파랑) vs 미진행 매장(회색) / 단위: 만원 / 이미지 원본 기준'
+      },
+      ooh: {
+        title: '옥외진행 합계',
+        type: 'bar',
+        labels: ['강남', '명동', '성수', '홍대'],
+        before: [9984, 204902, 34445, 17049],
+        after:  [24887, 183165, 41028, 10077],
+        pcts:   [149, -11, 19, -41],
+        colors: ['#2c62c8','#2c62c8','#2c62c8','#2c62c8'],
+        note: '옥외광고 집행 4개 지역 합계: 전 ₩207.8억 → 후 ₩248.2억 (+19%)'
+      },
+      nonooh: {
+        title: '미진행 지역',
+        type: 'bar',
+        labels: ['가로수길', '한남'],
+        before: [18890, 7796],
+        after:  [9890, 5326],
+        pcts:   [-48, -32],
+        colors: ['#9090b8','#9090b8'],
+        note: '미집행 지역: 전 ₩26.7억 → 후 ₩15.2억 (-43%) / 옥외진행 지역과 대비'
+      }
+    };
+
+    let currentChart = null;
+
+    function fmt(v) {
+      if (v >= 10000) return (v/10000).toFixed(1) + '억';
+      if (v >= 1000)  return (v/1000).toFixed(1) + '천만';
+      return v + '만';
+    }
+
+    function buildChart(key) {
+      const d = views[key];
+      if (currentChart) currentChart.destroy();
+
+      // PCT labels on top of bars using custom plugin
+      const pctPlugin = {
+        id: 'pctLabels',
+        afterDatasetsDraw(chart) {
+          const { ctx } = chart;
+          chart.data.datasets[1].data.forEach((val, i) => {
+            const meta = chart.getDatasetMeta(1);
+            if (!meta.data[i]) return;
+            const bar = meta.data[i];
+            const pct = d.pcts[i];
+            const color = pct >= 0 ? '#1e8a58' : '#c03030';
+            ctx.save();
+            ctx.font = 'bold 10px "DM Mono", monospace';
+            ctx.fillStyle = color;
+            ctx.textAlign = 'center';
+            ctx.fillText((pct > 0 ? '+' : '') + pct + '%', bar.x, bar.y - 4);
+            ctx.restore();
+          });
+        }
+      };
+
+      currentChart = new Chart(document.getElementById('salesCompareChart'), {
+        type: 'bar',
+        plugins: [pctPlugin],
+        data: {
+          labels: d.labels,
+          datasets: [
+            {
+              label: '전 ' + BEFORE,
+              data: d.before,
+              backgroundColor: d.colors.map(c => c + '55'),
+              borderColor: d.colors.map(c => c + 'cc'),
+              borderWidth: 1.5,
+              borderRadius: 3,
+              barPercentage: 0.65
+            },
+            {
+              label: '후 ' + AFTER,
+              data: d.after,
+              backgroundColor: d.colors,
+              borderColor: d.colors,
+              borderWidth: 0,
+              borderRadius: 3,
+              barPercentage: 0.65
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: { padding: { top: 20 } },
+          plugins: {
+            legend: { display: true, labels: { color: tc, font: { size: 10 }, boxWidth: 10, boxHeight: 10 } },
+            tooltip: {
+              callbacks: {
+                label: ctx => ctx.dataset.label + ': ₩' + ctx.parsed.y.toLocaleString() + '만'
+              }
+            }
+          },
+          scales: {
+            y: {
+              ticks: { color: tc, font: { size: 9 }, callback: v => fmt(v) },
+              grid: { color: gc }
+            },
+            x: {
+              ticks: { color: tc, font: { size: 9 }, maxRotation: 30 },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+      document.getElementById('storeStat').innerHTML =
+        `<span style="color:#6060a0;font-weight:500">${d.title}</span>　|　${d.note}`;
+    }
+
+    window.switchStore = function(key) {
+      document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+      const tabEl = document.getElementById('tab-' + key);
+      if (tabEl) tabEl.classList.add('active');
+      buildChart(key);
+    };
+
+    buildChart('region');
+  })();
+
+  const sharedOpts = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } }
+  };
+
+  // ── Impact vs 비용비중
+  new Chart(document.getElementById('impactChart'), {
+    type: 'bar',
+    data: {
+      labels: ['성수', '강남', '명동', '홍대'],
+      datasets: [
+        {
+          label: 'Impact Index avg.',
+          data: [52.3, 26.0, 25.7, 24.5],
+          backgroundColor: '#a07840',
+          yAxisID: 'y',
+          barPercentage: 0.45,
+          categoryPercentage: 0.8
+        },
+        {
+          label: '비용 비중 (%)',
+          data: [43.9, 33.8, 13.6, 8.8],
+          backgroundColor: '#5b8de8',
+          yAxisID: 'y2',
+          barPercentage: 0.45,
+          categoryPercentage: 0.8
+        }
+      ]
+    },
+    options: {
+      ...sharedOpts,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: (ctx) => ctx.dataset.label + ': ' + ctx.parsed.y + (ctx.datasetIndex === 1 ? '%' : '')
+          }
+        }
+      },
+      scales: {
+        y: {
+          position: 'left',
+          ticks: { color: tc, font: { size: 11 } },
+          grid: { color: gc },
+          title: { display: true, text: 'Impact Index', color: tc, font: { size: 10 } }
+        },
+        y2: {
+          position: 'right',
+          ticks: { color: tc, font: { size: 11 }, callback: v => v + '%' },
+          grid: { drawOnChartArea: false },
+          title: { display: true, text: '비용 비중', color: tc, font: { size: 10 } }
+        },
+        x: { ticks: { color: tc, font: { size: 12 } }, grid: { display: false } }
+      }
+    }
   });
 
-  // Scroll reveal
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+  // ── CPM Chart
+  new Chart(document.getElementById('cpmChart'), {
+    type: 'bar',
+    data: {
+      labels: ['성수', '강남', '명동', '홍대'],
+      datasets: [{
+        label: 'Reach 기준 CPM (원)',
+        data: [57024, 28644, 26389, 7605],
+        backgroundColor: ['#a07840', '#2c62c8', '#2c62c8', '#2c62c8'],
+        borderRadius: 4,
+        barPercentage: 0.55
+      }]
+    },
+    options: {
+      ...sharedOpts,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => '₩' + ctx.parsed.y.toLocaleString() } }
+      },
+      scales: {
+        y: {
+          ticks: { color: tc, font: { size: 10 }, callback: v => '₩' + (v/1000).toFixed(0) + 'K' },
+          grid: { color: gc }
+        },
+        x: { ticks: { color: tc, font: { size: 12 } }, grid: { display: false } }
       }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }
+  });
 
-  revealEls.forEach(el => observer.observe(el));
-
-  // Smooth nav highlight
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-
-  const sectionObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => {
-          link.style.color = link.getAttribute('href') === '#' + entry.target.id
-            ? 'var(--text)' : '';
-        });
-      }
-    });
-  }, { threshold: 0.3 });
-
-  sections.forEach(s => sectionObserver.observe(s));
-
-  // Number counter animation
-  const statNumbers = document.querySelectorAll('.stat-number');
-  const counterObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const text = el.textContent;
-        const num = parseInt(text);
-        if (!isNaN(num)) {
-          let start = 0;
-          const duration = 1200;
-          const step = timestamp => {
-            if (!start) start = timestamp;
-            const progress = Math.min((timestamp - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            el.textContent = Math.floor(eased * num) + (text.includes('+') ? '+' : '');
-            if (progress < 1) requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
+  // ── GA Chart
+  new Chart(document.getElementById('gaChart'), {
+    type: 'bar',
+    data: {
+      labels: ['총 사용자', '새 사용자', '재방문자'],
+      datasets: [
+        {
+          label: '전 (1/26~2/9)',
+          data: [154038, 80454, 66852],
+          backgroundColor: '#d0d0e0',
+          barPercentage: 0.55
+        },
+        {
+          label: '후 (2/26~3/12)',
+          data: [212648, 111032, 96002],
+          backgroundColor: '#2c62c8',
+          barPercentage: 0.55
         }
-        counterObserver.unobserve(el);
+      ]
+    },
+    options: {
+      ...sharedOpts,
+      plugins: {
+        legend: { display: true, labels: { color: tc, font: { size: 10 }, boxWidth: 10, boxHeight: 10 } },
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString() } }
+      },
+      scales: {
+        y: {
+          ticks: { color: tc, font: { size: 10 }, callback: v => (v/1000).toFixed(0) + 'K' },
+          grid: { color: gc }
+        },
+        x: { ticks: { color: tc, font: { size: 10 } }, grid: { display: false } }
       }
-    });
-  }, { threshold: 0.5 });
+    }
+  });
 
-  statNumbers.forEach(el => counterObserver.observe(el));
 </script>
 </body>
 </html>
