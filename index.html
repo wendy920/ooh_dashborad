@@ -874,7 +874,7 @@
     const campEnd   = new Date('2026-03-31');
     const totalDays = (campEnd - campStart) / 86400000 + 1;
 
-    const ROW_H = 36, NAME_W = 200, COST_W = 96, RIGHT_PAD = 16;
+    const ROW_H = 36, NAME_W = 200, COST_W = 96, RIGHT_PAD = 52;
     const HEADER_H = 40, LEGEND_H = 36;
 
     // Build date axis labels
@@ -966,13 +966,12 @@
 
       svg += `<rect x="${bx}" y="${by}" width="${bw}" height="${barH}" rx="3" fill="${col.bar}" opacity="0.85" clip-path="url(#barClip)"/>`;
 
-      // Date labels on bar
+      // Date labels outside bar (left = start, right = end)
       const startLabel = m.start.slice(5).replace('-','/');
       const endLabel   = m.end.slice(5).replace('-','/');
-      if (bw > 60) {
-        svg += `<text x="${bx+6}" y="${cy+4}" font-size="9" fill="white" font-family="'DM Mono',monospace" clip-path="url(#barClip)">${startLabel}</text>`;
-        svg += `<text x="${bx+bw-6}" y="${cy+4}" text-anchor="end" font-size="9" fill="white" font-family="'DM Mono',monospace" clip-path="url(#barClip)">${endLabel}</text>`;
-      }
+      const TPAD = 5;
+      svg += `<text x="${bx - TPAD}" y="${cy+4}" text-anchor="end" font-size="9" font-weight="500" fill="${col.text}" font-family="'DM Mono',monospace">${startLabel}</text>`;
+      svg += `<text x="${bx + bw + TPAD}" y="${cy+4}" font-size="9" font-weight="500" fill="${col.text}" font-family="'DM Mono',monospace">${endLabel}</text>`;
 
       // Row separator
       svg += `<line x1="0" y1="${y+ROW_H}" x2="9999" y2="${y+ROW_H}" stroke="#e8e8f0" stroke-width="0.5"/>`;
