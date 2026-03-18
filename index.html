@@ -127,7 +127,7 @@
     line-height: 1;
     margin-bottom: 8px;
   }
-  .kpi-value.gold { color: var(--accent2); }
+  .kpi-value.gold { color: var(--accent2); font-size: 20px; }
   .kpi-value.blue { color: var(--blue2); }
   .kpi-value.green { color: var(--green); }
   .kpi-sub {
@@ -401,6 +401,7 @@
     .main { padding: 1.5rem; }
     .header { padding: 1.5rem; flex-direction: column; }
     .kpi-value { font-size: 22px; }
+    .kpi-value.gold { font-size: 16px; }
     .footer { flex-direction: column; gap: 6px; align-items: flex-start; }
   }
 
@@ -416,8 +417,8 @@
     .header-right { gap: 5px; }
     .tag { font-size: 10px; padding: 3px 7px; }
     .kpi { padding: 1rem; }
-    .kpi-value { font-size: 20px; }
-    .kpi-value.gold { font-size: 16px !important; }
+    .kpi-value { font-size: 18px; }
+    .kpi-value.gold { font-size: 14px !important; }
     .card { padding: 1rem; }
     .card-title { font-size: 10px; }
     .section-label { font-size: 9px; letter-spacing: 0.08em; }
@@ -456,13 +457,13 @@
   <div class="kpi-grid mb">
     <div class="kpi">
       <div class="kpi-label">총 광고비</div>
-      <div class="kpi-value gold" style="font-size:20px;font-weight:700;letter-spacing:-0.02em">₩201,800,000</div>
+      <div class="kpi-value gold">₩201,800,000</div>
       <div class="kpi-sub">2억 180만원 / 제작비 포함<br>매드업 할인 ₩3,000,000 적용</div>
       <span class="badge badge-note">총 13개 매체 (서브지면 53개역 포함)</span>
     </div>
     <div class="kpi">
       <div class="kpi-label">총 노출 수 (DOOH achieved)</div>
-      <div class="kpi-value blue" style="font-size:28px;font-weight:700">13,766회</div>
+      <div class="kpi-value blue">13,766회</div>
       <div class="kpi-sub">디지털 매체 실집계 기준<br>PSD 고정매체 별도 산정</div>
       <span class="badge badge-note">Reach 잠재 2.26M+</span>
     </div>
