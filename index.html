@@ -7,7 +7,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap');
+  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
 
   :root {
     --bg: #ffffff;
@@ -27,13 +28,13 @@
     --green: #1e8a58;
     --red: #c03030;
     --amber: #b06820;
-    --mono: 'DM Mono', monospace;
+    --mono: 'DM Mono', 'Pretendard', monospace;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
   body {
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Pretendard', sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
@@ -315,7 +316,7 @@
     font-size: 12px;
     color: var(--text2);
   }
-  .sa-table td:first-child { text-align: left; color: var(--text); font-family: 'Noto Sans KR', sans-serif; }
+  .sa-table td:first-child { text-align: left; color: var(--text); font-family: 'Pretendard', sans-serif; }
   .sa-table .uplift { color: var(--green); font-weight: 500; }
   .sa-table tr:last-child td { border-bottom: none; }
 
@@ -455,13 +456,13 @@
   <div class="kpi-grid mb">
     <div class="kpi">
       <div class="kpi-label">총 광고비</div>
-      <div class="kpi-value gold" style="font-size:19px;letter-spacing:-0.02em">₩201,800,000</div>
+      <div class="kpi-value gold" style="font-size:16px;font-weight:700;letter-spacing:-0.02em">₩201,800,000</div>
       <div class="kpi-sub">2억 180만원 / 제작비 포함<br>매드업 할인 ₩3,000,000 적용</div>
       <span class="badge badge-note">총 13개 매체 (서브지면 53개역 포함)</span>
     </div>
     <div class="kpi">
       <div class="kpi-label">총 노출 수 (DOOH achieved)</div>
-      <div class="kpi-value blue">13,766회</div>
+      <div class="kpi-value blue" style="font-size:24px;font-weight:700">13,766회</div>
       <div class="kpi-sub">디지털 매체 실집계 기준<br>PSD 고정매체 별도 산정</div>
       <span class="badge badge-note">Reach 잠재 2.26M+</span>
     </div>
@@ -493,19 +494,19 @@
       <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px">
         <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px">지역 포지셔닝</div>
         <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--border)">
-          <span style="flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:#2c62c8;border-radius:3px;padding:2px 8px;font-family:'DM Mono',monospace;white-space:nowrap">성수 44%</span>
+          <span style="flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:#2c62c8;border-radius:3px;padding:2px 8px;font-family:'Pretendard',sans-serif;font-weight:600;white-space:nowrap">성수 44%</span>
           <div style="font-size:11px;color:var(--text2);line-height:1.5"><span style="color:var(--text);font-weight:600">주력 / MZ 타겟 핵심 거점</span> — 트렌드 민감도 및 팝업 효율 극대화</div>
         </div>
         <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--border)">
-          <span style="flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:#a07840;border-radius:3px;padding:2px 8px;font-family:'DM Mono',monospace;white-space:nowrap">강남 34%</span>
+          <span style="flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:#a07840;border-radius:3px;padding:2px 8px;font-family:'Pretendard',sans-serif;font-weight:600;white-space:nowrap">강남 34%</span>
           <div style="font-size:11px;color:var(--text2);line-height:1.5"><span style="color:var(--text);font-weight:600">구매력 높은 세그먼트 커버</span> — 비즈니스 및 하이엔드 소비층 노출</div>
         </div>
         <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-bottom:1px solid var(--border)">
-          <span style="flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:#1e8a58;border-radius:3px;padding:2px 8px;font-family:'DM Mono',monospace;white-space:nowrap">명동 14%</span>
+          <span style="flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:#1e8a58;border-radius:3px;padding:2px 8px;font-family:'Pretendard',sans-serif;font-weight:600;white-space:nowrap">명동 14%</span>
           <div style="font-size:11px;color:var(--text2);line-height:1.5"><span style="color:var(--text);font-weight:600">인바운드 관광객 노출 보조</span> — 글로벌 브랜드 인지도 및 외국인 타겟</div>
         </div>
         <div style="display:flex;gap:8px;align-items:flex-start;padding:6px 0">
-          <span style="flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:#8b44b8;border-radius:3px;padding:2px 8px;font-family:'DM Mono',monospace;white-space:nowrap">홍대 9%</span>
+          <span style="flex-shrink:0;font-size:10px;font-weight:700;color:#fff;background:#8b44b8;border-radius:3px;padding:2px 8px;font-family:'Pretendard',sans-serif;font-weight:600;white-space:nowrap">홍대 9%</span>
           <div style="font-size:11px;color:var(--text2);line-height:1.5"><span style="color:var(--text);font-weight:600">바이럴 확산 보조 역할</span> — 대학생 및 1020 세대 접점 확보</div>
         </div>
       </div>
@@ -954,7 +955,7 @@
     const totalH = HEADER_H + LEGEND_H + DATE_H + mediaData.length * ROW_H + 20;
 
     // Build SVG
-    let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 ${NAME_W + COST_W + CHART_W + RIGHT_PAD} ${totalH}" style="font-family:'Noto Sans KR',sans-serif;display:block;min-width:840px">`;
+    let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 ${NAME_W + COST_W + CHART_W + RIGHT_PAD} ${totalH}" style="font-family:'Pretendard',sans-serif;display:block;min-width:840px">`;
 
     // Defs
     svg += `<defs>
@@ -1002,7 +1003,7 @@
     let lx = NAME_W + COST_W + 8;
     Object.entries(typeLabel).forEach(([k, v]) => {
       svg += `<rect x="${lx}" y="${legendY-9}" width="10" height="10" rx="2" fill="${typeColor[k].bar}"/>`;
-      svg += `<text x="${lx+13}" y="${legendY}" font-size="9" fill="#808090" font-family="'Noto Sans KR',sans-serif">${v}</text>`;
+      svg += `<text x="${lx+13}" y="${legendY}" font-size="9" fill="#808090" font-family="'Pretendard',sans-serif">${v}</text>`;
       lx += 72;
     });
 
@@ -1015,11 +1016,11 @@
 
       // Region badge
       svg += `<rect x="8" y="${cy-9}" width="28" height="18" rx="3" fill="${rcol}22"/>`;
-      svg += `<text x="22" y="${cy+4}" text-anchor="middle" font-size="9" fill="${rcol}" font-family="'Noto Sans KR',sans-serif" font-weight="500">${m.region}</text>`;
+      svg += `<text x="22" y="${cy+4}" text-anchor="middle" font-size="9" fill="${rcol}" font-family="'Pretendard',sans-serif" font-weight="500">${m.region}</text>`;
 
       // Media name (NAME_W 240 기준 15자로 확대)
       const truncName = m.name.length > 15 ? m.name.slice(0,15) + '…' : m.name;
-      svg += `<text x="44" y="${cy+4}" font-size="11" fill="#222235" font-family="'Noto Sans KR',sans-serif">${truncName}</text>`;
+      svg += `<text x="44" y="${cy+4}" font-size="11" fill="#222235" font-family="'Pretendard',sans-serif">${truncName}</text>`;
 
       // Cost (우측 정렬 — 컬럼 우측 경계 기준)
       const costStr = (m.cost / 1000000).toFixed(1) + 'M';
