@@ -706,61 +706,115 @@
   </div>
 
   <!-- ── POPULATION ── -->
-  <div class="section-label">유동인구 현황 & 타겟 적합성</div>
+  <div class="section-label">유동인구 vs 광고비 배분 — 전략적 역전 구조</div>
   <div class="two-col">
+
+    <!-- 왼쪽: 유동인구 순위 -->
     <div class="card">
-      <div class="card-title">지역별 일평균 역사 유동인구 (집행기간 기준)</div>
+      <div class="card-title">지역별 일평균 역사 유동인구 — 유동인구 순위</div>
+
       <div class="pop-row">
+        <span style="width:24px;font-size:10px;font-weight:700;color:var(--text3);font-family:var(--mono);flex-shrink:0">#1</span>
         <span class="pop-name">홍대</span>
         <div class="pop-bar-wrap"><div class="pop-bar" style="width:100%;background:#5b8de8"></div></div>
         <span class="pop-val">198,529명</span>
-        <span class="pop-pct">비중 8.8%</span>
       </div>
       <div class="pop-row">
+        <span style="width:24px;font-size:10px;font-weight:700;color:var(--text3);font-family:var(--mono);flex-shrink:0">#2</span>
         <span class="pop-name">명동</span>
         <div class="pop-bar-wrap"><div class="pop-bar" style="width:99.8%;background:#7aaaf0"></div></div>
         <span class="pop-val">198,219명</span>
-        <span class="pop-pct">비중 13.6%</span>
       </div>
       <div class="pop-row">
+        <span style="width:24px;font-size:10px;font-weight:700;color:var(--text3);font-family:var(--mono);flex-shrink:0">#3</span>
         <span class="pop-name">강남</span>
-        <div class="pop-bar-wrap"><div class="pop-bar" style="width:78.7%;background:#c8a96e"></div></div>
+        <div class="pop-bar-wrap"><div class="pop-bar" style="width:78.7%;background:#9090b8"></div></div>
         <span class="pop-val">156,267명</span>
-        <span class="pop-pct">비중 33.8%</span>
       </div>
       <div class="pop-row">
-        <span class="pop-name">성수</span>
-        <div class="pop-bar-wrap"><div class="pop-bar" style="width:55%;background:#c8a96e"></div></div>
-        <span class="pop-val">109,335명</span>
-        <span class="pop-pct">비중 43.9%</span>
+        <span style="width:24px;font-size:10px;font-weight:700;color:var(--accent2);font-family:var(--mono);flex-shrink:0">#4</span>
+        <span class="pop-name" style="color:var(--accent2);font-weight:600">성수</span>
+        <div class="pop-bar-wrap"><div class="pop-bar" style="width:55.1%;background:var(--accent)"></div></div>
+        <span class="pop-val" style="color:var(--accent2);font-weight:500">109,335명</span>
       </div>
-      <div class="pop-row">
+      <div class="pop-row" style="opacity:0.55">
+        <span style="width:24px;font-size:10px;font-weight:400;color:var(--text3);font-family:var(--mono);flex-shrink:0">서브</span>
         <span class="pop-name">건대</span>
         <div class="pop-bar-wrap"><div class="pop-bar" style="width:44.2%;background:#c8c8d8"></div></div>
         <span class="pop-val">87,748명</span>
-        <span class="pop-pct">서브</span>
       </div>
+
       <div style="margin-top:12px;font-size:10px;color:var(--text3);font-family:var(--mono)">서울시 지하철 승하차 데이터 / 2026-02-23~03-08 기준 일평균</div>
     </div>
+
+    <!-- 오른쪽: 광고비 배분 -->
     <div class="card">
-      <div class="card-title">매체 가중치 기준표</div>
-      <table style="width:100%;border-collapse:collapse;font-size:11px">
-        <thead>
-          <tr>
-            <th style="text-align:left;padding:0 6px 8px;font-size:10px;font-family:var(--mono);color:var(--text3);border-bottom:1px solid var(--border)">매체 타입</th>
-            <th style="text-align:center;padding:0 6px 8px;font-size:10px;font-family:var(--mono);color:var(--text3);border-bottom:1px solid var(--border)">가중치</th>
-            <th style="text-align:left;padding:0 6px 8px;font-size:10px;font-family:var(--mono);color:var(--text3);border-bottom:1px solid var(--border)">설명</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">역사 브랜딩</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--accent)">3.0</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">고정 PSD, 벽면래핑</td></tr>
-          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">역사 패키지</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--accent)">2.5</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">플랫폼+통로+출구 패키지</td></tr>
-          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">랜드마크 DOOH</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--blue2)">2.5</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">도시 대표 광고판 G-LIGHT</td></tr>
-          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">개찰구 DOOH</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--text2)">1.5</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">개찰구 앞 디지털 스크린</td></tr>
-          <tr><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text)">대형 DOOH</td><td style="text-align:center;padding:7px 6px;border-bottom:1px solid var(--border);font-family:var(--mono);color:var(--text2)">1.3</td><td style="padding:7px 6px;border-bottom:1px solid var(--border);color:var(--text3);font-size:10px">건물 벽면 대형 LED</td></tr>
-          <tr><td style="padding:7px 6px;color:var(--text)">단일 DOOH</td><td style="text-align:center;padding:7px 6px;font-family:var(--mono);color:var(--text3)">1.0</td><td style="padding:7px 6px;color:var(--text3);font-size:10px">소형 디지털 스크린</td></tr>
-        </tbody>
-      </table>
+      <div class="card-title">광고비 배분 비중 — 집행 우선순위</div>
+
+      <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)">
+        <span style="width:24px;font-size:10px;font-weight:700;color:var(--accent2);font-family:var(--mono);flex-shrink:0">#1</span>
+        <span style="width:36px;font-size:12px;font-weight:700;color:var(--accent2);flex-shrink:0">성수</span>
+        <div style="flex:1;background:#f0f0f8;border-radius:2px;height:8px;overflow:hidden">
+          <div style="width:100%;height:100%;background:var(--accent);border-radius:2px"></div>
+        </div>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--accent2);font-weight:700;flex-shrink:0;width:42px;text-align:right">43.9%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)">
+        <span style="width:24px;font-size:10px;font-weight:700;color:var(--text3);font-family:var(--mono);flex-shrink:0">#2</span>
+        <span style="width:36px;font-size:12px;font-weight:500;color:var(--text);flex-shrink:0">강남</span>
+        <div style="flex:1;background:#f0f0f8;border-radius:2px;height:8px;overflow:hidden">
+          <div style="width:77%;height:100%;background:#5b8de8;border-radius:2px"></div>
+        </div>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--text2);flex-shrink:0;width:42px;text-align:right">33.8%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)">
+        <span style="width:24px;font-size:10px;font-weight:700;color:var(--text3);font-family:var(--mono);flex-shrink:0">#3</span>
+        <span style="width:36px;font-size:12px;font-weight:500;color:var(--text);flex-shrink:0">명동</span>
+        <div style="flex:1;background:#f0f0f8;border-radius:2px;height:8px;overflow:hidden">
+          <div style="width:31%;height:100%;background:#5b8de8;border-radius:2px"></div>
+        </div>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--text2);flex-shrink:0;width:42px;text-align:right">13.6%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding:9px 0">
+        <span style="width:24px;font-size:10px;font-weight:700;color:var(--text3);font-family:var(--mono);flex-shrink:0">#4</span>
+        <span style="width:36px;font-size:12px;font-weight:500;color:var(--text3);flex-shrink:0">홍대</span>
+        <div style="flex:1;background:#f0f0f8;border-radius:2px;height:8px;overflow:hidden">
+          <div style="width:20%;height:100%;background:#9090b8;border-radius:2px"></div>
+        </div>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--text3);flex-shrink:0;width:42px;text-align:right">8.8%</span>
+      </div>
+
+      <!-- 왜 홍대 최하위? -->
+      <div style="margin-top:14px;padding:10px 12px;background:#faf9f6;border-radius:6px;border-left:3px solid var(--accent)">
+        <div style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px">왜 유동인구 #1 홍대가 광고비 최하위인가?</div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.65">홍대는 유동인구 최다이나 MLB 핵심 타겟(2030 패션 감도층) 집중도가 낮아 타겟 도달 효율이 떨어짐. 성수는 유동인구가 가장 적지만 MZ 트렌드 밀집 상권으로 단위 인구당 전환 기대값이 가장 높음.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 인사이트 배너 -->
+  <div style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:10px;padding:1.4rem 1.8rem;margin-bottom:2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap">
+    <div style="flex:1;min-width:200px">
+      <div style="font-size:9px;font-family:var(--mono);color:#9090b8;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px">전략적 인사이트</div>
+      <div style="font-size:17px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.3">유동인구 총량 ≠ 타겟 도달 효율</div>
+      <div style="font-size:11px;color:#a0a0c0;line-height:1.75">유동인구 상위(홍대·명동)와 광고비 최상위(성수)의 역전은 의도된 전략입니다. 성수는 MLB 핵심 구매층인 MZ 패션 소비층 밀집 상권으로, 단위 인구당 브랜드 전환 기대값이 압도적으로 높습니다. Impact Index 1위(52.3)가 이 전략의 유효성을 방증합니다.</div>
+    </div>
+    <div style="display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap">
+      <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,0.06);border-radius:8px;border:1px solid rgba(255,255,255,0.1)">
+        <div style="font-size:9px;font-family:var(--mono);color:#9090b8;margin-bottom:4px;letter-spacing:0.08em;white-space:nowrap">성수 유동인구 순위</div>
+        <div style="font-size:30px;font-weight:700;color:#c8a96e;font-family:var(--mono);line-height:1">#4</div>
+        <div style="font-size:9px;color:#9090b8;margin-top:3px">4개 지역 중</div>
+      </div>
+      <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,0.06);border-radius:8px;border:1px solid rgba(255,255,255,0.1)">
+        <div style="font-size:9px;font-family:var(--mono);color:#9090b8;margin-bottom:4px;letter-spacing:0.08em;white-space:nowrap">성수 광고비 순위</div>
+        <div style="font-size:30px;font-weight:700;color:#c8a96e;font-family:var(--mono);line-height:1">#1</div>
+        <div style="font-size:9px;color:#9090b8;margin-top:3px">43.9% 집중 투자</div>
+      </div>
+      <div style="text-align:center;padding:12px 16px;background:rgba(255,255,255,0.06);border-radius:8px;border:1px solid rgba(255,255,255,0.1)">
+        <div style="font-size:9px;font-family:var(--mono);color:#9090b8;margin-bottom:4px;letter-spacing:0.08em;white-space:nowrap">Impact Index</div>
+        <div style="font-size:30px;font-weight:700;color:#1e8a58;font-family:var(--mono);line-height:1">52.3</div>
+        <div style="font-size:9px;color:#9090b8;margin-top:3px">전체 1위</div>
+      </div>
     </div>
   </div>
 
