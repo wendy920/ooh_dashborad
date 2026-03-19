@@ -278,6 +278,7 @@
   .carousel-add { width:100%; margin-top:6px; font-size:10px; font-family:'Pretendard',sans-serif; padding:5px 0; border-radius:5px; border:1px dashed #d0d0e0; background:transparent; color:#9090a8; cursor:pointer; transition:all 0.15s; }
   .carousel-add:hover { border-color:#2c62c8; color:#2c62c8; background:#f0f4ff; }
   .carousel-count { position:absolute; top:6px; right:8px; font-size:10px; font-family:'DM Mono',monospace; background:rgba(0,0,0,0.45); color:#fff; padding:2px 7px; border-radius:10px; pointer-events:none; }
+  .carousel-filename { position:absolute; bottom:0; left:0; right:0; font-size:10px; font-family:'Pretendard',sans-serif; background:rgba(0,0,0,0.52); color:#fff; padding:4px 8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:none; }
   .idx-hi { color: var(--accent2); font-weight: 500; font-family: var(--mono); }
   .idx-mid { color: var(--blue2); font-family: var(--mono); }
   .idx-lo { color: var(--text3); font-family: var(--mono); }
@@ -989,7 +990,9 @@
   MEDIA_LIST.forEach(m => {
     try {
       const saved = localStorage.getItem('mlb-ooh-imgs-' + m.id);
-      carouselState[m.id] = saved ? JSON.parse(saved) : [];
+      carouselState[m.id] = saved
+        ? JSON.parse(saved).map(item => typeof item === 'string' ? {src: item, name: ''} : item)
+        : [];
     } catch(e) { carouselState[m.id] = []; }
   });
 
@@ -1014,10 +1017,11 @@
       </div>`;
       vp.classList.remove('has-images');
     } else {
-      vp.innerHTML = imgs.map((src,i) => `
+      vp.innerHTML = imgs.map((item,i) => `
         <div class="carousel-slide ${i===idx?'active':''}">
-          <img src="${src}">
+          <img src="${item.src}">
           <div class="carousel-count">${i+1} / ${imgs.length}</div>
+          ${item.name ? `<div class="carousel-filename">${item.name}</div>` : ''}
         </div>`).join('');
       vp.classList.add('has-images');
       vp.oncontextmenu = e => {
@@ -1049,7 +1053,7 @@
       if (!file.type.startsWith('image/')) return;
       const reader = new FileReader();
       reader.onload = e => {
-        carouselState[id].push(e.target.result);
+        carouselState[id].push({ src: e.target.result, name: file.name });
         carouselIdx[id] = carouselState[id].length - 1;
         saveToStorage(id);
         renderCarousel(id);
