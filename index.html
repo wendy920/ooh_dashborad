@@ -238,6 +238,25 @@
   .media-table .num { text-align: right; font-family: var(--mono); }
   .media-table .region-cell { color: var(--text3); font-size: 11px; }
   .media-table .media-name { color: var(--text); font-weight: 500; font-size: 12px; }
+  .media-table td.img-cell { padding: 6px 8px; vertical-align: middle; }
+
+  /* ── 이미지 드롭존 ── */
+  .img-drop-zone {
+    width: 128px; height: 84px;
+    border: 1.5px dashed #d0d0e0;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    background: #f5f5f8;
+    transition: all 0.15s;
+    position: relative; overflow: hidden;
+  }
+  .img-drop-zone:hover { border-color: #2c62c8; background: #f0f4ff; }
+  .img-drop-zone.drag-over { border-color: #2c62c8; background: #e6f0ff; transform: scale(1.04); }
+  .img-drop-zone.has-image { border-style: solid; border-color: #e0e0e8; background: transparent; }
+  .drop-hint { font-size: 16px; color: #c0c0d0; pointer-events: none; }
+  .img-drop-zone.has-image .drop-hint { display: none; }
+  .img-drop-zone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
   .idx-hi { color: var(--accent2); font-weight: 500; font-family: var(--mono); }
   .idx-mid { color: var(--blue2); font-family: var(--mono); }
   .idx-lo { color: var(--text3); font-family: var(--mono); }
@@ -604,6 +623,7 @@
       <thead>
         <tr>
           <th>지역</th>
+          <th>매체 이미지</th>
           <th>매체명</th>
           <th>타입</th>
           <th style="text-align:right">가중치</th>
@@ -616,6 +636,7 @@
       <tbody>
         <tr>
           <td class="region-cell">성수</td>
+          <td class="img-cell"><div id="dz1" class="img-drop-zone" onclick="document.getElementById('file-dz1').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz1')"><span class="drop-hint">+</span><img id="preview-dz1"><input id="file-dz1" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz1')"></div></td>
           <td class="media-name">성수역 디지털 종합안내도</td>
           <td><span class="type-pill p1">개찰구 DOOH</span></td>
           <td class="num">2.0</td>
@@ -626,6 +647,7 @@
         </tr>
         <tr>
           <td class="region-cell"></td>
+          <td class="img-cell"><div id="dz2" class="img-drop-zone" onclick="document.getElementById('file-dz2').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz2')"><span class="drop-hint">+</span><img id="preview-dz2"><input id="file-dz2" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz2')"></div></td>
           <td class="media-name">성수15 전광판</td>
           <td><span class="type-pill p2">역사 패키지</span></td>
           <td class="num">2.5</td>
@@ -636,6 +658,7 @@
         </tr>
         <tr>
           <td class="region-cell"></td>
+          <td class="img-cell"><div id="dz3" class="img-drop-zone" onclick="document.getElementById('file-dz3').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz3')"><span class="drop-hint">+</span><img id="preview-dz3"><input id="file-dz3" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz3')"></div></td>
           <td class="media-name">엔스퀘어 성수역1기</td>
           <td><span class="type-pill p3">대형 DOOH</span></td>
           <td class="num">1.3</td>
@@ -646,6 +669,7 @@
         </tr>
         <tr>
           <td class="region-cell">강남</td>
+          <td class="img-cell"><div id="dz4" class="img-drop-zone" onclick="document.getElementById('file-dz4').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz4')"><span class="drop-hint">+</span><img id="preview-dz4"><input id="file-dz4" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz4')"></div></td>
           <td class="media-name">G-LIGHT</td>
           <td><span class="type-pill p4">랜드마크 DOOH</span></td>
           <td class="num">2.5</td>
@@ -656,6 +680,7 @@
         </tr>
         <tr>
           <td class="region-cell"></td>
+          <td class="img-cell"><div id="dz5" class="img-drop-zone" onclick="document.getElementById('file-dz5').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz5')"><span class="drop-hint">+</span><img id="preview-dz5"><input id="file-dz5" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz5')"></div></td>
           <td class="media-name">엔스퀘어 강남역 4기</td>
           <td><span class="type-pill p3">대형 DOOH</span></td>
           <td class="num">1.3</td>
@@ -666,6 +691,7 @@
         </tr>
         <tr>
           <td class="region-cell">명동</td>
+          <td class="img-cell"><div id="dz6" class="img-drop-zone" onclick="document.getElementById('file-dz6').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz6')"><span class="drop-hint">+</span><img id="preview-dz6"><input id="file-dz6" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz6')"></div></td>
           <td class="media-name">명동 신한은행 전광판</td>
           <td><span class="type-pill p3">대형 DOOH +a</span></td>
           <td class="num">2.2</td>
@@ -676,6 +702,7 @@
         </tr>
         <tr>
           <td class="region-cell"></td>
+          <td class="img-cell"><div id="dz7" class="img-drop-zone" onclick="document.getElementById('file-dz7').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz7')"><span class="drop-hint">+</span><img id="preview-dz7"><input id="file-dz7" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz7')"></div></td>
           <td class="media-name">엔스퀘어 명동역 1기</td>
           <td><span class="type-pill p1">개찰구 DOOH</span></td>
           <td class="num">1.5</td>
@@ -686,6 +713,7 @@
         </tr>
         <tr>
           <td class="region-cell">홍대</td>
+          <td class="img-cell"><div id="dz8" class="img-drop-zone" onclick="document.getElementById('file-dz8').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz8')"><span class="drop-hint">+</span><img id="preview-dz8"><input id="file-dz8" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz8')"></div></td>
           <td class="media-name">홍대역 씽크</td>
           <td><span class="type-pill p2">역사 동선 패키지</span></td>
           <td class="num">2.5</td>
@@ -696,6 +724,7 @@
         </tr>
         <tr>
           <td class="region-cell"></td>
+          <td class="img-cell"><div id="dz9" class="img-drop-zone" onclick="document.getElementById('file-dz9').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz9')"><span class="drop-hint">+</span><img id="preview-dz9"><input id="file-dz9" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz9')"></div></td>
           <td class="media-name">엔스퀘어 홍대역 1기</td>
           <td><span class="type-pill p1">개찰구 DOOH</span></td>
           <td class="num">1.2</td>
@@ -902,6 +931,39 @@
 </div>
 
 <script>
+  // ── 이미지 드래그앤드롭 ──
+  function handleImgDrop(event, id) {
+    event.preventDefault();
+    const zone = document.getElementById(id);
+    zone.classList.remove('drag-over');
+    const file = event.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadImgPreview(file, id);
+  }
+
+  function handleFileInput(event, id) {
+    const file = event.target.files[0];
+    if (file) loadImgPreview(file, id);
+  }
+
+  function loadImgPreview(file, id) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const preview = document.getElementById('preview-' + id);
+      const zone    = document.getElementById(id);
+      preview.src   = e.target.result;
+      preview.style.display = 'block';
+      zone.classList.add('has-image');
+      zone.oncontextmenu = ev => {
+        ev.preventDefault();
+        preview.src = '';
+        preview.style.display = 'none';
+        zone.classList.remove('has-image');
+        document.getElementById('file-' + id).value = '';
+      };
+    };
+    reader.readAsDataURL(file);
+  }
+
   const tc = '#9090a8';
   const gc = 'rgba(0,0,0,0.06)';
 
