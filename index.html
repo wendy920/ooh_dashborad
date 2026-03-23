@@ -1329,7 +1329,7 @@
       { name: '통합',   amount: 30000000, pct: null,  color: '#9090b0', type: '커버리지' },
     ];
     const max = 76700000;
-    let html = '';
+    let html = '<div style="display:flex;justify-content:flex-end;margin-bottom:8px"><span style="font-size:10px;color:#9090a8;font-family:\'DM Mono\',monospace">(단위: 만원)</span></div>';
     regions.forEach(r => {
       const w = Math.round((r.amount / max) * 100);
       const amtStr = (r.amount / 10000).toFixed(0) + '만';
