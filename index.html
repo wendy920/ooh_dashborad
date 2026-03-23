@@ -671,7 +671,7 @@
       <tbody>
         <tr>
           <td class="region-cell">성수</td>
-          <td class="img-cell"><div id="dz1" class="img-drop-zone" onclick="document.getElementById('file-dz1').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz1')"><span class="drop-hint">+</span><img id="preview-dz1"><input id="file-dz1" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz1')"></div></td>
+          <td class="img-cell"><div id="img-seongsu-digi" class="img-drop-zone" onclick="document.getElementById('file-img-seongsu-digi').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-seongsu-digi')"><span class="drop-hint">+</span><img id="preview-img-seongsu-digi"><input id="file-img-seongsu-digi" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-seongsu-digi')"></div></td>
           <td class="media-name">성수역 디지털 종합안내도</td>
           <td><span class="type-pill p1">개찰구 DOOH</span></td>
           <td class="num">2.0</td>
@@ -704,7 +704,7 @@
         </tr>
         <tr>
           <td class="region-cell">강남</td>
-          <td class="img-cell"><div id="dz4" class="img-drop-zone" onclick="document.getElementById('file-dz4').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'dz4')"><span class="drop-hint">+</span><img id="preview-dz4"><input id="file-dz4" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'dz4')"></div></td>
+          <td class="img-cell"><div id="img-glight" class="img-drop-zone" onclick="document.getElementById('file-img-glight').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-glight')"><span class="drop-hint">+</span><img id="preview-img-glight"><input id="file-img-glight" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-glight')"></div></td>
           <td class="media-name">G-LIGHT</td>
           <td><span class="type-pill p4">랜드마크 DOOH</span></td>
           <td class="num">2.5</td>
@@ -1726,6 +1726,22 @@
 
   buildCarouselGrid();
   MEDIA_LIST.forEach(m => renderCarousel(m.id));
+
+  // Impact Index 테이블 이미지 자동 로드
+  const TABLE_IMAGES = {
+    'img-glight':       'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(1).jpg',
+    'img-seongsu-digi': 'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/%EC%84%B1%EC%88%98%EC%97%AD%EC%A2%85%ED%95%A9%EC%95%88%EB%82%B4%EB%8F%84_2%EB%B2%88%EC%B6%9C%EA%B5%AC%20(1).jpg',
+  };
+
+  Object.entries(TABLE_IMAGES).forEach(([id, url]) => {
+    const preview = document.getElementById('preview-' + id);
+    const zone    = document.getElementById(id);
+    if (preview && zone) {
+      preview.src = url;
+      preview.style.display = 'block';
+      zone.classList.add('has-image');
+    }
+  });
 </script>
 </body>
 </html>
