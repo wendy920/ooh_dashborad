@@ -999,6 +999,21 @@
   const carouselIdx = {};
   MEDIA_LIST.forEach(m => { carouselIdx[m.id] = 0; });
 
+  // GitHub raw 이미지 초기값
+  const GITHUB_IMAGES = {
+    'glight': [
+      'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(1).jpg',
+      'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(2).jpg',
+      'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(3).jpg',
+      'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(4).jpg',
+    ],
+  };
+  MEDIA_LIST.forEach(m => {
+    if (carouselState[m.id].length === 0 && GITHUB_IMAGES[m.id]) {
+      carouselState[m.id] = GITHUB_IMAGES[m.id];
+    }
+  });
+
   function saveToStorage(id) {
     try { localStorage.setItem('mlb-ooh-imgs-' + id, JSON.stringify(carouselState[id])); } catch(e) {}
   }
@@ -1017,12 +1032,15 @@
       </div>`;
       vp.classList.remove('has-images');
     } else {
-      vp.innerHTML = imgs.map((item,i) => `
-        <div class="carousel-slide ${i===idx?'active':''}">
-          <img src="${item.src}">
+      vp.innerHTML = imgs.map((item,i) => {
+        const src  = typeof item === 'string' ? item : item.src;
+        const name = typeof item === 'string' ? '' : item.name;
+        return `<div class="carousel-slide ${i===idx?'active':''}">
+          <img src="${src}">
           <div class="carousel-count">${i+1} / ${imgs.length}</div>
-          ${item.name ? `<div class="carousel-filename">${item.name}</div>` : ''}
-        </div>`).join('');
+          ${name ? `<div class="carousel-filename">${name}</div>` : ''}
+        </div>`;
+      }).join('');
       vp.classList.add('has-images');
       vp.oncontextmenu = e => {
         e.preventDefault();
@@ -1663,25 +1681,8 @@
     }
   });
 
-  // GitHub 이미지 초기값 설정
-  const GITHUB_IMAGES = {
-    'glight': [
-      'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(1).jpg',
-      'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(2).jpg',
-      'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(3).jpg',
-      'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(4).jpg',
-    ],
-  };
-
-  // localStorage에 없으면 GitHub 이미지로 초기화
-  MEDIA_LIST.forEach(m => {
-    if (carouselState[m.id].length === 0 && GITHUB_IMAGES[m.id]) {
-      carouselState[m.id] = GITHUB_IMAGES[m.id].map(src => ({ src, name: decodeURIComponent(src.split('/').pop()) }));
-      saveToStorage(m.id);
-    }
-  });
-
   buildCarouselGrid();
+  MEDIA_LIST.forEach(m => renderCarousel(m.id));
 </script>
 </body>
 </html>
