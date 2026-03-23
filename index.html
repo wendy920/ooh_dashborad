@@ -1032,7 +1032,10 @@
   };
   MEDIA_LIST.forEach(m => {
     if (carouselState[m.id].length === 0 && GITHUB_IMAGES[m.id]) {
-      carouselState[m.id] = GITHUB_IMAGES[m.id];
+      carouselState[m.id] = GITHUB_IMAGES[m.id].map(url => ({
+        src: url,
+        name: decodeURIComponent(url.split('/').pop()),
+      }));
     }
   });
 
