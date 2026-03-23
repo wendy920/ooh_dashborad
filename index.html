@@ -1332,7 +1332,7 @@
     let html = '';
     regions.forEach(r => {
       const w = Math.round((r.amount / max) * 100);
-      const amtStr = (r.amount / 10000000).toFixed(1) + '억';
+      const amtStr = (r.amount / 10000).toFixed(0) + '만';
       const pctStr = r.pct !== null ? r.pct.toFixed(1) + '%' : '커버리지';
       html += `
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
