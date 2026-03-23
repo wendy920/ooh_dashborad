@@ -650,9 +650,9 @@
   </div>
 
   <!-- ── MEDIA TABLE ── -->
-  <div class="section-label">매체별 Impact Index 상세</div>
+  <div class="section-label">매체별 비용 효율 분석</div>
   <div class="card mb">
-    <div class="card-title">DOOH 매체별 성과 — 가중치 · Weighted Exposure · Impact Index · 노출 단가</div>
+    <div class="card-title">DOOH/OOH 매체별 — 비용·노출·효율 종합 / 효율등급: A=저CPM+고노출 B=평균 C=고CPM+저노출</div>
     <div style="overflow-x:auto">
     <table class="media-table">
       <thead>
@@ -660,118 +660,199 @@
           <th>지역</th>
           <th>매체 이미지</th>
           <th>매체명</th>
-          <th>타입</th>
-          <th style="text-align:right">가중치</th>
-          <th style="text-align:right">매체 주목도 지수</th>
-          <th style="text-align:right">Impact Index</th>
-          <th style="text-align:right">기간 광고비</th>
-          <th style="text-align:right">노출단가 (₩/회)</th>
+          <th>종류</th>
+          <th>집행기간</th>
+          <th style="text-align:right">총비용</th>
+          <th style="text-align:right">예산비중</th>
+          <th style="text-align:right">유동인구(일)</th>
+          <th style="text-align:right">총 노출인구</th>
+          <th style="text-align:right">CPM</th>
+          <th>효율등급</th>
         </tr>
       </thead>
       <tbody>
         <tr>
+          <td class="region-cell">명동</td>
+          <td><div class="img-drop-zone" id="img-myeongdong-sh" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-myeongdong-sh')" onclick="document.getElementById('file-img-myeongdong-sh').click()"><img id="preview-img-myeongdong-sh" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-myeongdong-sh" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-myeongdong-sh')"></td>
+          <td class="media-name">명동 신한은행</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/23~3/31</td>
+          <td class="num">₩12,000,000</td>
+          <td class="num">5.9%</td>
+          <td class="num">67,974</td>
+          <td class="num">2,652,966</td>
+          <td class="num">₩4,525</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(44,98,200,0.08);color:#1a4ea8;border:1px solid rgba(44,98,200,0.18)">B</span></td>
+        </tr>
+        <tr>
           <td class="region-cell">성수</td>
-          <td class="img-cell"><div id="img-seongsu-digi" class="img-drop-zone" onclick="document.getElementById('file-img-seongsu-digi').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-seongsu-digi')"><span class="drop-hint">+</span><img id="preview-img-seongsu-digi"><input id="file-img-seongsu-digi" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-seongsu-digi')"></div></td>
+          <td><div class="img-drop-zone" id="img-seongsu-digi" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-seongsu-digi')" onclick="document.getElementById('file-img-seongsu-digi').click()"><img id="preview-img-seongsu-digi" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-seongsu-digi" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-seongsu-digi')"></td>
           <td class="media-name">성수역 디지털 종합안내도</td>
-          <td><span class="type-pill p1">개찰구 DOOH</span></td>
-          <td class="num">2.0</td>
-          <td class="num">11,332</td>
-          <td class="num idx-hi">100.0</td>
-          <td class="num">₩8,541,176</td>
-          <td class="num">₩1,507</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/26~3/31</td>
+          <td class="num">₩26,400,000</td>
+          <td class="num">12.9%</td>
+          <td class="num">100,458</td>
+          <td class="num">3,415,572</td>
+          <td class="num">₩7,729</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(44,98,200,0.08);color:#1a4ea8;border:1px solid rgba(44,98,200,0.18)">B</span></td>
         </tr>
         <tr>
           <td class="region-cell"></td>
-          <td class="img-cell"><div id="img-seongsu-15" class="img-drop-zone" onclick="document.getElementById('file-img-seongsu-15').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-seongsu-15')"><span class="drop-hint">+</span><img id="preview-img-seongsu-15"><input id="file-img-seongsu-15" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-seongsu-15')"></div></td>
-          <td class="media-name">성수15 전광판</td>
-          <td><span class="type-pill p2">역사 패키지</span></td>
-          <td class="num">2.5</td>
-          <td class="num">5,593</td>
-          <td class="num idx-mid">49.4</td>
-          <td class="num">₩5,338,235</td>
-          <td class="num">₩2,386</td>
+          <td><div class="img-drop-zone" id="img-seongsu-15" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-seongsu-15')" onclick="document.getElementById('file-img-seongsu-15').click()"><img id="preview-img-seongsu-15" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-seongsu-15" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-seongsu-15')"></td>
+          <td class="media-name">성수역 15</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/26~3/31</td>
+          <td class="num">₩16,500,000</td>
+          <td class="num">8.1%</td>
+          <td class="num">100,458</td>
+          <td class="num">2,131,712</td>
+          <td class="num">₩7,743</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(44,98,200,0.08);color:#1a4ea8;border:1px solid rgba(44,98,200,0.18)">B</span></td>
         </tr>
         <tr>
           <td class="region-cell"></td>
-          <td class="img-cell"><div id="img-nsq-seongsu" class="img-drop-zone" onclick="document.getElementById('file-img-nsq-seongsu').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-nsq-seongsu')"><span class="drop-hint">+</span><img id="preview-img-nsq-seongsu"><input id="file-img-nsq-seongsu" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-nsq-seongsu')"></div></td>
-          <td class="media-name">엔스퀘어 성수역1기</td>
-          <td><span class="type-pill p3">대형 DOOH</span></td>
-          <td class="num">1.3</td>
-          <td class="num">858</td>
-          <td class="num idx-lo">7.6</td>
-          <td class="num">₩3,558,824</td>
-          <td class="num">₩5,392</td>
-        </tr>
-        <tr>
-          <td class="region-cell">강남</td>
-          <td class="img-cell"><div id="img-glight" class="img-drop-zone" onclick="document.getElementById('file-img-glight').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-glight')"><span class="drop-hint">+</span><img id="preview-img-glight"><input id="file-img-glight" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-glight')"></div></td>
-          <td class="media-name">G-LIGHT</td>
-          <td><span class="type-pill p4">랜드마크 DOOH</span></td>
-          <td class="num">2.5</td>
-          <td class="num">2,450</td>
-          <td class="num idx-mid">21.6</td>
-          <td class="num">₩4,529,412</td>
-          <td class="num">₩4,622</td>
+          <td><div class="img-drop-zone" id="img-psd-seongsu" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-psd-seongsu')" onclick="document.getElementById('file-img-psd-seongsu').click()"><img id="preview-img-psd-seongsu" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-psd-seongsu" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-psd-seongsu')"></td>
+          <td class="media-name">PSD 성수역</td>
+          <td><span class="type-pill p2">OOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/27~3/31</td>
+          <td class="num">₩10,350,000</td>
+          <td class="num">5.1%</td>
+          <td class="num">100,458</td>
+          <td class="num">3,315,114</td>
+          <td class="num">₩3,122</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(30,138,88,0.1);color:#156644;border:1px solid rgba(30,138,88,0.2)">A</span></td>
         </tr>
         <tr>
           <td class="region-cell"></td>
-          <td class="img-cell"><div id="img-nsq-gangnam" class="img-drop-zone" onclick="document.getElementById('file-img-nsq-gangnam').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-nsq-gangnam')"><span class="drop-hint">+</span><img id="preview-img-nsq-gangnam"><input id="file-img-nsq-gangnam" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-nsq-gangnam')"></div></td>
-          <td class="media-name">엔스퀘어 강남역 4기</td>
-          <td><span class="type-pill p3">대형 DOOH</span></td>
-          <td class="num">1.3</td>
-          <td class="num">3,432</td>
-          <td class="num idx-mid">30.3</td>
-          <td class="num">₩14,270,270</td>
-          <td class="num">₩5,405</td>
+          <td><div class="img-drop-zone" id="img-psd-kundae" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-psd-kundae')" onclick="document.getElementById('file-img-psd-kundae').click()"><img id="preview-img-psd-kundae" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-psd-kundae" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-psd-kundae')"></td>
+          <td class="media-name">PSD 건대입구</td>
+          <td><span class="type-pill p2">OOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/27~3/31</td>
+          <td class="num">₩12,450,000</td>
+          <td class="num">6.1%</td>
+          <td class="num">94,290</td>
+          <td class="num">3,111,570</td>
+          <td class="num">₩4,001</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(30,138,88,0.1);color:#156644;border:1px solid rgba(30,138,88,0.2)">A</span></td>
         </tr>
         <tr>
           <td class="region-cell">명동</td>
-          <td class="img-cell"><div id="img-myeongdong-sh" class="img-drop-zone" onclick="document.getElementById('file-img-myeongdong-sh').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-myeongdong-sh')"><span class="drop-hint">+</span><img id="preview-img-myeongdong-sh"><input id="file-img-myeongdong-sh" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-myeongdong-sh')"></div></td>
-          <td class="media-name">명동 신한은행 전광판</td>
-          <td><span class="type-pill p3">대형 DOOH +a</span></td>
-          <td class="num">2.2</td>
-          <td class="num">4,831</td>
-          <td class="num idx-mid">42.6</td>
-          <td class="num">₩4,941,176</td>
-          <td class="num">₩2,250</td>
-        </tr>
-        <tr>
-          <td class="region-cell"></td>
-          <td class="img-cell"><div id="img-nsq-myeongdong" class="img-drop-zone" onclick="document.getElementById('file-img-nsq-myeongdong').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-nsq-myeongdong')"><span class="drop-hint">+</span><img id="preview-img-nsq-myeongdong"><input id="file-img-nsq-myeongdong" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-nsq-myeongdong')"></div></td>
-          <td class="media-name">엔스퀘어 명동역 1기</td>
-          <td><span class="type-pill p1">개찰구 DOOH</span></td>
-          <td class="num">1.5</td>
-          <td class="num">990</td>
-          <td class="num idx-lo">8.7</td>
-          <td class="num">₩355,882</td>
-          <td class="num">₩539</td>
+          <td><div class="img-drop-zone" id="img-psd-myeongdong" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-psd-myeongdong')" onclick="document.getElementById('file-img-psd-myeongdong').click()"><img id="preview-img-psd-myeongdong" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-psd-myeongdong" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-psd-myeongdong')"></td>
+          <td class="media-name">PSD 명동역</td>
+          <td><span class="type-pill p2">OOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/27~3/31</td>
+          <td class="num">₩10,600,000</td>
+          <td class="num">5.2%</td>
+          <td class="num">67,974</td>
+          <td class="num">2,242,842</td>
+          <td class="num">₩4,727</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(30,138,88,0.1);color:#156644;border:1px solid rgba(30,138,88,0.2)">A</span></td>
         </tr>
         <tr>
           <td class="region-cell">홍대</td>
-          <td class="img-cell"><div id="img-hongdae-think" class="img-drop-zone" onclick="document.getElementById('file-img-hongdae-think').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-hongdae-think')"><span class="drop-hint">+</span><img id="preview-img-hongdae-think"><input id="file-img-hongdae-think" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-hongdae-think')"></div></td>
+          <td><div class="img-drop-zone" id="img-hongdae-think" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-hongdae-think')" onclick="document.getElementById('file-img-hongdae-think').click()"><img id="preview-img-hongdae-think" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-hongdae-think" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-hongdae-think')"></td>
           <td class="media-name">홍대역 씽크</td>
-          <td><span class="type-pill p2">역사 동선 패키지</span></td>
-          <td class="num">2.5</td>
-          <td class="num">4,758</td>
-          <td class="num idx-mid">42.0</td>
-          <td class="num">₩4,626,471</td>
-          <td class="num">₩2,431</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/26~3/31</td>
+          <td class="num">₩14,300,000</td>
+          <td class="num">7.0%</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td style="color:var(--text3)">-</td>
         </tr>
         <tr>
-          <td class="region-cell"></td>
-          <td class="img-cell"><div id="img-nsq-hongdae" class="img-drop-zone" onclick="document.getElementById('file-img-nsq-hongdae').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-nsq-hongdae')"><span class="drop-hint">+</span><img id="preview-img-nsq-hongdae"><input id="file-img-nsq-hongdae" type="file" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-nsq-hongdae')"></div></td>
+          <td class="region-cell">강남</td>
+          <td><div class="img-drop-zone" id="img-nsq-gangnam" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-nsq-gangnam')" onclick="document.getElementById('file-img-nsq-gangnam').click()"><img id="preview-img-nsq-gangnam" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-nsq-gangnam" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-nsq-gangnam')"></td>
+          <td class="media-name">엔스퀘어 강남역 4기</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/26~3/31</td>
+          <td class="num">₩11,000,000</td>
+          <td class="num">5.4%</td>
+          <td class="num">141,173</td>
+          <td class="num">6,064,439</td>
+          <td class="num">₩1,814</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(30,138,88,0.1);color:#156644;border:1px solid rgba(30,138,88,0.2)">A</span></td>
+        </tr>
+        <tr>
+          <td class="region-cell">성수</td>
+          <td><div class="img-drop-zone" id="img-nsq-seongsu" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-nsq-seongsu')" onclick="document.getElementById('file-img-nsq-seongsu').click()"><img id="preview-img-nsq-seongsu" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-nsq-seongsu" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-nsq-seongsu')"></td>
+          <td class="media-name">엔스퀘어 성수역1기</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/26~3/31</td>
+          <td class="num">₩11,000,000</td>
+          <td class="num">5.4%</td>
+          <td class="num">100,458</td>
+          <td class="num">1,366,190</td>
+          <td class="num">₩8,054</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(192,48,48,0.08);color:#c03030;border:1px solid rgba(192,48,48,0.18)">C</span></td>
+        </tr>
+        <tr>
+          <td class="region-cell">홍대</td>
+          <td><div class="img-drop-zone" id="img-nsq-hongdae" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-nsq-hongdae')" onclick="document.getElementById('file-img-nsq-hongdae').click()"><img id="preview-img-nsq-hongdae" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-nsq-hongdae" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-nsq-hongdae')"></td>
           <td class="media-name">엔스퀘어 홍대역 1기</td>
-          <td><span class="type-pill p1">개찰구 DOOH</span></td>
-          <td class="num">1.2</td>
-          <td class="num">792</td>
-          <td class="num idx-lo">7.0</td>
-          <td class="num">₩355,882</td>
-          <td class="num">₩539</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/26~3/31</td>
+          <td class="num">₩1,100,000</td>
+          <td class="num">0.5%</td>
+          <td class="num">177,099</td>
+          <td class="num">2,378,630</td>
+          <td class="num">₩463</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(30,138,88,0.1);color:#156644;border:1px solid rgba(30,138,88,0.2)">A</span></td>
+        </tr>
+        <tr>
+          <td class="region-cell">명동</td>
+          <td><div class="img-drop-zone" id="img-nsq-myeongdong" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-nsq-myeongdong')" onclick="document.getElementById('file-img-nsq-myeongdong').click()"><img id="preview-img-nsq-myeongdong" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-nsq-myeongdong" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-nsq-myeongdong')"></td>
+          <td class="media-name">엔스퀘어 명동역 1기</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/26~3/31</td>
+          <td class="num">₩1,100,000</td>
+          <td class="num">0.5%</td>
+          <td class="num">67,974</td>
+          <td class="num">1,019,610</td>
+          <td class="num">₩1,079</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(30,138,88,0.1);color:#156644;border:1px solid rgba(30,138,88,0.2)">A</span></td>
+        </tr>
+        <tr>
+          <td class="region-cell">강남</td>
+          <td><div class="img-drop-zone" id="img-glight" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-glight')" onclick="document.getElementById('file-img-glight').click()"><img id="preview-img-glight" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-glight" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-glight')"></td>
+          <td class="media-name">G-LIGHT</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/23~3/31</td>
+          <td class="num">₩46,500,000</td>
+          <td class="num">22.8%</td>
+          <td class="num">141,173</td>
+          <td class="num">5,497,399</td>
+          <td class="num">₩8,459</td>
+          <td><span style="display:inline-block;font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:3px;background:rgba(192,48,48,0.08);color:#c03030;border:1px solid rgba(192,48,48,0.18)">C</span></td>
+        </tr>
+        <tr>
+          <td class="region-cell">혼합</td>
+          <td><div class="img-drop-zone" id="img-metro" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImgDrop(event,'img-metro')" onclick="document.getElementById('file-img-metro').click()"><img id="preview-img-metro" src="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:4px"><span class="drop-hint">+</span></div><input type="file" id="file-img-metro" accept="image/*" style="display:none" onchange="handleFileInput(event,'img-metro')"></td>
+          <td class="media-name">메트로게이트</td>
+          <td><span class="type-pill p3">DOOH</span></td>
+          <td style="font-size:11px;font-family:var(--mono)">2/26~3/31</td>
+          <td class="num">₩28,500,000</td>
+          <td class="num">14.0%</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td style="color:var(--text3)">-</td>
+        </tr>
+        <tr style="background:var(--bg2)">
+          <td colspan="5" style="font-weight:500;font-size:12px">합계</td>
+          <td class="num" style="font-weight:500">₩201,800,000</td>
+          <td class="num" style="font-weight:500">100%</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td class="num" style="color:var(--text3)">-</td>
+          <td></td>
         </tr>
       </tbody>
     </table>
     </div>
-    <div style="margin-top:10px;font-size:10px;color:var(--text3);font-family:var(--mono)">※ PSD 고정 매체(성수·명동·건대) 별도 산정 — 역사 유동인구 × 접촉률 추정값으로 기준 상이 / 집행기간 광고비 = 총광고비 × (집행기간/전체기간)</div>
+    <div style="margin-top:10px;font-size:10px;color:var(--text3);font-family:var(--mono)">※ 홍대역 씽크·메트로게이트는 유동인구 데이터 미집계 / CPM = 총비용 ÷ 총노출인구 × 1,000</div>
   </div>
 
   <!-- ── POPULATION ── -->
