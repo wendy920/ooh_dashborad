@@ -1663,6 +1663,17 @@
     }
   });
 
+  // G-LIGHT 초기 이미지 (localStorage에 저장된 값이 없을 때만 적용)
+  if (carouselState['glight'].length === 0) {
+    carouselState['glight'] = [
+      { src: 'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(1).jpg', name: 'glight강남 (1).jpg' },
+      { src: 'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(2).jpg', name: 'glight강남 (2).jpg' },
+      { src: 'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(3).jpg', name: 'glight강남 (3).jpg' },
+      { src: 'https://raw.githubusercontent.com/wendy920/ooh_dashborad/main/glight%EA%B0%95%EB%82%A8%20(4).jpg', name: 'glight강남 (4).jpg' },
+    ];
+    saveToStorage('glight');
+  }
+
   buildCarouselGrid();
 </script>
 </body>
